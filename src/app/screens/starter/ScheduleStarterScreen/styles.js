@@ -5,6 +5,10 @@ export default StyleSheet.create({
         textAlign:'center',
         height:'40%',
         alignItems:'center',
-        justifyContent:'space-around'
+        justifyContent:'space-around',
+        flex: 1
+    },
+    messages: {
+        alignItems:'center',
     }
 })

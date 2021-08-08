@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../resources/colors';
 
 export default StyleSheet.create({
     area:{
         height:70,
         flexDirection:'row',
         justifyContent:'space-between',
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor: 'white'
     },
     label:{
         paddingLeft:10,
@@ -18,7 +20,7 @@ export default StyleSheet.create({
         alignItems:'center',
         borderRadius:45,
         marginTop:-45,
-        backgroundColor:"#00bb44"
+        backgroundColor: colors.accent,
     },
     icon:{
         width:60,

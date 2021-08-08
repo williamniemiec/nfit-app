@@ -7,14 +7,14 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     title:{
-        
         fontSize:18,
-        color:'white'
+        color:'white',
+        fontWeight: 'bold'
     },
     btn:{
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#0077ff',
+        backgroundColor:'#e5810c',
         width:'100%',
         borderRadius:10,
         height:40

@@ -8,6 +8,9 @@ import AddButton from '../../components/button/small/AddButton'
 import EditButton from '../../components/button/small/EditButton'
 import TrashButton from '../../components/button/small/TrashButton'
 import Workout from '../../components/Workout'
+import { translate } from '../../locales';
+import { buildHeaderTabAccent } from '../../components/HeaderTab';
+import BarbellBackground from '../../components/background/BarbellBackground';
 
 export default function TrainingScreen() {
     const dispatch = useDispatch()
@@ -15,12 +18,7 @@ export default function TrainingScreen() {
     const user = useSelector(state => state.user)
 
     useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title:'Meus treinos',
-            headerRight:() => <AddButton onPress={() => navigation.navigate('EditWorkoutScreen')} />,
-            headerLeft:null
-        })
+        navigation.setOptions(buildHeaderTabAccent(null, <AddButton onPress={() => navigation.navigate('EditWorkoutScreen')} />, translate('my_workouts')));
     },[])
 
     const handleEditWorkout = (workout) => {
@@ -29,15 +27,15 @@ export default function TrainingScreen() {
 
     const handleDeleteWorkout = (workoutId) => {
         Alert.alert(
-            "Deletar treino",
-            "Você tem certeza que deseja excluir esse treino?",
+            translate('remove_workout'),
+            translate('remove_workout_confirmation'),
             [
               {
-                text: "Não",
+                text: translate('no'),
                 onPress: null
               },
               { 
-                text: "Sim", 
+                text: translate('yes'), 
                 onPress: () => dispatch({type:'DEL_MY_WORKOUTS', payload:{workoutId:workoutId}})
               }
             ],
@@ -46,6 +44,7 @@ export default function TrainingScreen() {
     }
 
     return (
+        <BarbellBackground>
         <ScrollView style={[globalStyles.container, styles.body]}>
             {user.myWorkouts.map((workout, index) => (
                 <View style={styles.area} key={index}>
@@ -61,5 +60,6 @@ export default function TrainingScreen() {
                 </View>  
             ))}
         </ScrollView>
+        </BarbellBackground>
     )
 }

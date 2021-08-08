@@ -1,70 +1,58 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
-import globalStyles from '../../../assets/styles/global'
-import { Button, SafeAreaView, Text, TextInput, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import TransparentButton from '../../../components/button/TransparentButton'
-import styles from './styles'
-import { useDispatch } from 'react-redux'
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import globalStyles from '../../../assets/styles/global';
+import { SafeAreaView, Text, TextInput, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
+import { translate } from '../../../locales';
+import { buildHeaderTabDark } from '../../../components/HeaderTab';
+import TheManBackground from '../../../components/background/TheManBackground';
 
 export default function WelcomeScreen() {
-    const navigation = useNavigation()
-    const [name, setName] = useState('')
+  const navigation = useNavigation();
+  const [name, setName] = useState('');
 
-    const refName = useRef(name)
+  const refName = useRef(name);
 
-    const handleGoNext = () => {
-        if (refName.current === '') {
-            alert("Digite um nome")
-        }
-        else {
-            navigation.navigate('ScheduleStarterScreen', {
-                name:refName.current
-            })
-        }
+  const handleGoNext = () => {
+    if (refName.current === '') {
+      alert(translate('name_required'));
     }
-
-    function handleGoBack() {
-        navigation.goBack()
+    else {
+      navigation.navigate('ScheduleStarterScreen', {
+        name: refName.current
+      })
     }
+  }
 
-    useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title:'',
-            headerRight:() => <TransparentButton title='Próximo >' onPress={handleGoNext} />,
-            headerLeft:() => <TransparentButton title='< Voltar' onPress={handleGoBack} />
-        })
-    },[])
+  function handleGoBack() {
+    navigation.goBack();
+  }
 
-    //const dispatch = useDispatch()
-    /*
-    function changeName(name) {
-        dispatch({
-            type:'SET_NAME',
-            payload:{
-                name:name
-            }
-        })
-    }*/
+  function changeName(newName) {
+    setName(newName);
+    refName.current = newName;
+  }
 
-    function changeName(name) {
-        setName(name)
-        refName.current = name
-    }
+  useLayoutEffect(() => {
+    navigation.setOptions(buildHeaderTabDark(handleGoBack, handleGoNext));
+  }, []);
 
-    return (
-        <SafeAreaView style={[globalStyles.container, globalStyles.background]}>
-            <View style={[styles.area]}>
-                <Text style={globalStyles.title}>Qual é o seu nome?</Text>
-                <TextInput 
-                    style={styles.input} 
-                    placeholder='Nome' 
-                    onChangeText={changeName} 
-                    autoFocus={true} 
-                    autoCapitalize="words" 
-                    onSubmitEditing={handleGoNext}
-                />
-            </View>
-        </SafeAreaView>
-    )
+  return (
+    <TheManBackground>
+      <SafeAreaView style={[globalStyles.container, globalStyles.panel]}>
+        <View style={[styles.area]}>
+          <Text style={globalStyles.title}>{translate('question_name')}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={translate('name')}
+            placeholderTextColor='white'
+            onChangeText={changeName}
+            autoFocus={true}
+            autoCapitalize="words"
+            onSubmitEditing={handleGoNext}
+          />
+        </View>
+      </SafeAreaView>
+    </TheManBackground>
+  )
 }

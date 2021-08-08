@@ -4,9 +4,11 @@ export default StyleSheet.create({
     title:{
         fontSize:20,
         margin:5,
-        marginLeft:10
+        marginLeft:10,
+        color: 'white'
     },
     left:{
+        width: '80%',
         justifyContent:'space-between'
     },
     right:{
@@ -15,6 +17,7 @@ export default StyleSheet.create({
     },
     icons:{
         flexDirection:'row',
+        width: '70%',
         margin:5
     },
     

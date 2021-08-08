@@ -6,15 +6,14 @@ import styles from './styles'
 import CloseButton from '../../components/button/small/CloseButton'
 import ExerciseItem from '../../components/ExerciseItem'
 import { useDispatch } from 'react-redux'
-
-
+import { translate } from '../../locales';
+import FitnessBackground from '../../components/background/FitnessBackground';
 
 export default function MyTrainingScreen(props) {
     const exercisesDone = new Set()
     const workout = props.route.params.workout
     const navigation = useNavigation()
     const exercises = workout.exercises
-    //const [exercisesDone, setExercisesDone] = useState(new Set())
     const dispatch = useDispatch()
 
     useLayoutEffect(()=> {
@@ -35,7 +34,7 @@ export default function MyTrainingScreen(props) {
         console.log(exercisesDone)
 
         if (isAllExercisesDone()) {
-            alert('Tudo feito!')
+            alert(translate('all_workouts_done'))
 
             const today = new Date()
             let thisYear = today.getFullYear()
@@ -76,18 +75,11 @@ export default function MyTrainingScreen(props) {
     }
 
     const isAllExercisesDone = () => {
-        /*for (let i = 0; i < exercises.length; i++) {
-            if (!exercises[i].done)
-                return false
-        }
-
-        return true*/
         return exercisesDone.size == exercises.length
     }
 
     return (
-        <ImageBackground style={styles.background} source={require('../../assets/images/fitness.jpg')}>
-            <StatusBar barStyle='light-content' backgroundColor='#333' />
+        <FitnessBackground>
             <SafeAreaView style={styles.lightBackground}>
                 <View style={globalStyles.container}>
                     <View style={styles.header}>
@@ -104,6 +96,6 @@ export default function MyTrainingScreen(props) {
                     />
                 </View>
             </SafeAreaView>
-        </ImageBackground>
+        </FitnessBackground>
     )
 }

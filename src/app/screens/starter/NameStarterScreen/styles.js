@@ -9,12 +9,17 @@ export default StyleSheet.create({
         borderWidth:1,
         borderColor:'#ccc',
         borderRadius:5,
-        paddingLeft:10
+        paddingLeft:10,
+        color: 'white'
     },
     area:{
         textAlign:'center',
         height:'40%',
         alignItems:'center',
         justifyContent:'space-around'
+    },
+    title: {
+        color: 'white',
+        fontSize: 23
     }
 })

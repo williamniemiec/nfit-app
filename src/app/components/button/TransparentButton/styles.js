@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+
     title:{
-        
-        fontSize:15,
-        color:'blue'
+        fontSize:15
     },
     btn:{
         justifyContent:'center',

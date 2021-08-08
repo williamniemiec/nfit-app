@@ -5,7 +5,7 @@ import styles from './styles'
 export default function ConfigButton({onPress}) {
     return (
         <TouchableOpacity style={styles.btn} onPress={onPress}>
-            <Image style={styles.icon} source={require('../../../../assets/images/config.png')} />
+            <Image style={styles.icon} source={require('../../../../assets/images/config-white.png')} />
         </TouchableOpacity>
     )
 }

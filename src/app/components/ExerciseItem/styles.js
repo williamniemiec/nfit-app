@@ -24,7 +24,7 @@ export default StyleSheet.create({
     },
     exerciseDetails:{
         fontSize:12,
-        color:'#999',
+        color:'white',
     },
     index:{
         color:"white",

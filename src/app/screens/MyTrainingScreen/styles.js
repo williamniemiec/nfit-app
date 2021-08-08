@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../resources/colors';
 
 export default StyleSheet.create({
     body:{
@@ -9,10 +10,10 @@ export default StyleSheet.create({
         flexDirection:"row",
         justifyContent:'space-between',
         alignItems:"center",
-        backgroundColor:'#ccc',
+        backgroundColor:`rgba(${colors.accentRgb},0.6)`,
         borderRadius:10,
         borderWidth:1,
-        borderColor:'#999',
+        borderColor: colors.accent,
         margin:10
     },
     icon:{

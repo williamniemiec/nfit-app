@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import styles from './styles'
 import Muscles from '../muscles'
 import CheckButton from '../button/small/CheckButton';
+import { translate } from '../../locales';
 
 export default function ExerciseItem({data, index, onCheck}) {
     const [done, setDone] = useState(false)
@@ -20,7 +21,7 @@ export default function ExerciseItem({data, index, onCheck}) {
                 <View style={styles.exerciseInfo}>
                     <Text style={styles.exerciseName}>{data.name}</Text>
                     <Text style={styles.exerciseDetails}>
-                        {`${data.sets} séries - ${data.reps} rep ${data.load ? `- ${data.load} kg`:``}`}
+                        {`${data.sets} ${translate('workout_detail_sets')} - ${data.reps} ${translate('workout_detail_reps')} ${data.load ? `- ${data.load} ${translate('workout_detail_weight')}`:``}`}
                     </Text>
                 </View>
             </View>

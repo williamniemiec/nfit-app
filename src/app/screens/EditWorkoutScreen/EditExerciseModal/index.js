@@ -5,6 +5,8 @@ import globalStyles from '../../../assets/styles/global'
 import CustomModal from '../../../components/CustomModal'
 import MuscleSelector from '../../../components/MuscleSelector'
 import ActionButton from '../../../components/button/ActionButton'
+import { translate } from '../../../locales';
+import colors from '../../../resources/colors';
 
 export default function EditExerciseModal({modalVisible, setModalVisible, onSave, exercise}) {
     const isNew = (exercise === undefined || exercise === null)
@@ -29,7 +31,7 @@ export default function EditExerciseModal({modalVisible, setModalVisible, onSave
 
     const handleModalSave = () => {
         if (modalName == '' || modalMuscle == '' || modalSets == '' || modalReps == '' || modalLoad == '') {
-            alert('Preencha todos os campos!')
+            alert(translate('all_fields_required'))
             return
         }
 
@@ -37,68 +39,59 @@ export default function EditExerciseModal({modalVisible, setModalVisible, onSave
         setModalVisible(false)
     }
 
-    
-
-    /*
-    if (isNew) {
-        resetModal()
-    }
-    else {
-        //editExercise(exercise)
-    }
-*/
     return (
         <CustomModal
             visible={modalVisible}
             onClose={() => {setModalVisible(false)}}
+            style={{backgroundColor: 'rgba(255,255,255,0.8)'}}
         >
-            <Text style={styles.modalLabel}>Músculo de foco</Text>
+            <Text style={styles.modalLabel}>{translate('focus_muscle')}</Text>
 
             <MuscleSelector onSelect={setModalMuscle} />
 
-            <Text style={styles.modalLabel}>Nome do exercício</Text>
+            <Text style={styles.modalLabel}>{translate('workout_name')}</Text>
             <TextInput 
                 style={styles.modalInput}
                 value={modalName}
                 onChangeText={setModalName}
-                placeholder='Digite o nome do treino'
+                placeholder={translate('workout_name')}
             />
 
             <View style={styles.modalNumericInputs}>
                 <View style={styles.modalNumericInput}>
-                    <Text style={styles.modalLabel}>Séries</Text>
+                    <Text style={styles.modalLabel}>{translate('sets')}</Text>
                     <TextInput
                         style={styles.modalInput}
                         keyboardType='numeric'
                         value={modalSets}
                         onChangeText={setModalSets}
-                        placeholder='Digite as séries do treino'
+                        placeholder={translate('workout_sets')}
                     />
                 </View>
 
                 <View style={styles.modalNumericInput}>
-                    <Text style={styles.modalLabel}>Repetições</Text>
+                    <Text style={styles.modalLabel}>{translate('reps')}</Text>
                     <TextInput
                         style={styles.modalInput}
                         keyboardType='numeric'
                         value={modalReps}
                         onChangeText={setModalReps}
-                        placeholder='Digite as repetições do treino'
+                        placeholder={translate('workout_reps')}
                     />
                 </View>
 
                 <View style={styles.modalNumericInput}>
-                    <Text style={styles.modalLabel}>Carga</Text>
+                    <Text style={styles.modalLabel}>{translate('weight')}</Text>
                     <TextInput
                         style={styles.modalInput}
                         keyboardType='numeric'
                         value={modalLoad}
                         onChangeText={setModalLoad}
-                        placeholder='Digite a carga do treino'
+                        placeholder={translate('workout_weight')}
                     />
                 </View>
             </View>
-            <ActionButton bgColor='#4ac34e' title='Salvar' onPress={handleModalSave} />
+            <ActionButton bgColor={colors.accent} title={translate('save')} onPress={handleModalSave} />
         </CustomModal>
     )
 }

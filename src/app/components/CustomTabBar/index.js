@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Image } from 'react-native'
 import globalStyles from '../../assets/styles/global'
-import { TouchableHighlight } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import styles from './styles'
 
 function shouldHideTabBar(state, descriptors) {
@@ -46,19 +46,19 @@ export default function CustomTabBar({state, descriptors, navigation}) {
 
                if (options.type === 'big') { 
                     return (
-                        <TouchableHighlight key={index} onPress={handleRedirect} style={styles.home} underlayColor='green'>
+                        <TouchableOpacity key={index} onPress={handleRedirect} style={styles.home} >
                             <Image style={styles.icon} source={options.icon} />
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     )
                }
                else {
                     return (
-                        <TouchableHighlight key={index} onPress={handleRedirect} style={styles.btn} underlayColor='transparent'>
+                        <TouchableOpacity key={index} onPress={handleRedirect} style={styles.btn} >
                             <View style={styles.btnContent}>
                                 {(options.icon != undefined) ? <Image style={styles.btnRegular} source={options.icon} /> : null}
                                 <Text style={[styles.label, isFocused ? styles.focused : null]}>{label}</Text>
                             </View>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     )
                }
             })

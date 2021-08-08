@@ -1,6 +1,6 @@
 {
-  "name": "ntraining",
-  "version": "0.0.1",
+  "name": "nfit",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -12,9 +12,14 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-firebase/app": "^12.4.0",
+    "@react-native-firebase/firestore": "^12.4.0",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
+    "@wniemiec-component-reactnative/selectable-button": "^1.0.1",
+    "@wniemiec-component-reactnative/weekday-selector": "^1.0.3",
+    "i18n-js": "^3.8.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-config": "^1.4.2",
@@ -43,6 +48,8 @@
   },
   "jest": {
     "preset": "react-native",
-    "testMatch": ["**/tests/**/*.js"]
+    "testMatch": [
+      "**/tests/**/*.js"
+    ]
   }
 }

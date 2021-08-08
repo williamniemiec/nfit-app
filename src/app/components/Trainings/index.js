@@ -36,7 +36,7 @@ function generateMuscleListOfReactElements(exercises) {
     return generateListOfReactElements(muscleNames)
 }
 
-export default function Trainings({data, onPress}) {
+export default function Trainings({style, data, onPress}) {
     muscleMapping.set("ABS", <Abs />)
     muscleMapping.set("BACK", <Back />)
     muscleMapping.set("BICEPS", <Biceps />)
@@ -80,9 +80,9 @@ export default function Trainings({data, onPress}) {
 
     return (
         <FlatList 
-            style={{width:'100%'}}
+            style={[{width:'100%'}, style]}
             data={data}
-            renderItem={(item, index) => <TrainingItem item={item} id={item.item.id} name={item.item.name} exercises={item.item.exercises} />}
+            renderItem={(item, index) => <TrainingItem id={item.item.id} name={item.item.name} exercises={item.item.exercises} />}
         />
     )
 }

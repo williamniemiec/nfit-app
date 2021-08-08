@@ -16,7 +16,10 @@ export default StyleSheet.create({
     modalBox:{
         width:'90%',
         padding:20,
-        backgroundColor:'white'
+        backgroundColor:'white',
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#777'
     },
     modalClose:{
         height:40,

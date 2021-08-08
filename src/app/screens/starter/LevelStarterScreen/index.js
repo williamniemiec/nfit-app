@@ -1,75 +1,75 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
-import globalStyles from '../../../assets/styles/global'
-import { Button, SafeAreaView, Text, TextInput, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import TransparentButton from '../../../components/button/TransparentButton'
-import styles from './styles'
-import Niveis from '../../../components/Niveis'
-import { useSelector } from 'react-redux'
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import globalStyles from '../../../assets/styles/global';
+import { SafeAreaView, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
+import WorkoutLevel from '../../../components/WorkoutLevel';
+import { useSelector } from 'react-redux';
+import { translate } from '../../../locales';
+import { buildHeaderTabDark } from '../../../components/HeaderTab';
+import TheManBackground from '../../../components/background/TheManBackground';
+import colors from '../../../resources/colors';
 
 export default function WelcomeScreen(props) {
-    const navigation = useNavigation()
-    const [level, setLevel] = useState(-1)
 
-    const levelRef = useRef(level)
+  const [level, setLevel] = useState(-1);
+  const navigation = useNavigation();
+  const levelRef = useRef(level);
+  const totalDays = props.route.params.workoutDays.length;
 
-    function handleGoNext() {
-        if (levelRef.current < 0)
-            alert("Selecione um nível")
-        else
-            navigation.navigate('WorkoutStarterScreen', {
-                ...props.route.params, level:levelRef.current
-            })
-    }
+  function handleGoNext() {
+    if (levelRef.current < 0)
+      alert(translate('select_level'));
+    else
+      navigation.navigate('WorkoutStarterScreen', {
+        ...props.route.params, level: levelRef.current, totalDays
+      });
+  }
 
-    function handleGoBack() {
-        navigation.goBack()
-    }
+  function handleGoBack() {
+    navigation.goBack();
+  }
 
-    useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title:'',
-            headerRight:() => <TransparentButton title='Próximo >' onPress={handleGoNext} />,
-            headerLeft:() => <TransparentButton title='< Voltar' onPress={handleGoBack} />
-        })
-    },[])
+  function handleLevel(newName) {
+    setLevel(newName);
+    levelRef.current = newName;
+  }
 
-    const user = useSelector(s=>s.user)
-    const totalDays = user.totalDays
+  useLayoutEffect(() => {
+    navigation.setOptions(buildHeaderTabDark(handleGoBack, handleGoNext));
+  }, []);
 
-    function handleLevel(level) {
-        setLevel(level)
-        levelRef.current = level
-    }
+  return (
+    <TheManBackground>
+      <SafeAreaView style={[globalStyles.container, globalStyles.panel]}>
+        <View style={[styles.area]}>
+          <View style={styles.messages}>
+            <Text style={[globalStyles.message, globalStyles.highlight]}>{generateScheduleMessage(totalDays)}</Text>
+            <Text style={globalStyles.message}>{translate('question_level')}</Text>
+          </View>
+          <WorkoutLevel onPress={handleLevel} funny={true} bgColor={colors.accent} fgColor={colors.textPrimary} />
+          <Text style={globalStyles.message}>{translate('edit_note')}</Text>
+        </View>
+      </SafeAreaView>
+    </TheManBackground>
+  );
+}
 
-    function generateScheduleMessage() {
-        switch (totalDays) {
-            case 1:
-                return 'Não é o ideal, mas...'
-            case 2:
-                return 'Legal, ' + totalDays + ' dias. Recomendo que aumente com o tempo.'
-            case 3:
-                return 'Boa, ' + totalDays + ' dias é uma boa escolha'
-            case 4:
-                return 'É isso ai! ' + totalDays + ' dias fará você ter resultado mais rápido'
-            case 5:
-                return 'Uma semana completa de treino é uma ótima escolha'
-            case 6:
-                return totalDays + ' dias? VocÊ aproveita mesmo, em?'
-            case 7:
-                return totalDays + 'dias ??!! É você, Arnold Schwarzenegger?'
-        }
-    }
-
-    return (
-        <SafeAreaView style={[globalStyles.container, styles.background]}>
-            <View style={[styles.area]}>
-                <Text style={[globalStyles.message, globalStyles.highlight]}>{generateScheduleMessage()}</Text>
-                <Text style={globalStyles.message}>Qual seu nivel hoje?</Text>
-                <Niveis onPress={handleLevel} funny={true} />
-                <Text style={globalStyles.message}>Você pode alterar isso a qualquer momento</Text>
-            </View>
-        </SafeAreaView>
-    )
+function generateScheduleMessage(totalDays) {
+  switch (totalDays) {
+    case 1:
+      return translate('select_level_1');
+    case 2:
+      return `${translate('select_level_2_pt1')} ${totalDays} ${translate('select_level_2_pt2')}`;
+    case 3:
+      return `${translate('select_level_3_pt1')} ${totalDays} ${translate('select_level_3_pt2')}`;
+    case 4:
+      return `${translate('select_level_4_pt1')} ${totalDays} ${translate('select_level_4_pt2')}`;
+    case 5:
+      return translate('select_level_5');
+    case 6:
+      return `${totalDays} ${translate('select_level_6_pt2')}`;
+    case 7:
+      return `${totalDays} ${translate('select_level_7_pt2')}`;
+  }
 }

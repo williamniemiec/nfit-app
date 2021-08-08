@@ -4,8 +4,8 @@ import styles from './styles'
 
 export default function AddButton({onPress, selected}) {
     const icon = selected 
-        ? require('../../../../assets/images/trash-black.png') 
-        : require('../../../../assets/images/trash-black.png')
+        ? require('../../../../assets/images/trash-white.png') 
+        : require('../../../../assets/images/trash-white.png')
     
     return (
         <TouchableOpacity style={styles.btn} onPress={onPress}>

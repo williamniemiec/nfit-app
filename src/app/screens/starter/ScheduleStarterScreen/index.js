@@ -1,65 +1,67 @@
-import React, { useLayoutEffect, useState } from 'react'
-import globalStyles from '../../../assets/styles/global'
-import { Button, SafeAreaView, Text, TextInput, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import TransparentButton from '../../../components/button/TransparentButton'
-import styles from './styles'
-import DiasDaSemana from '../../../components/DiasDaSemana'
+import React, { useLayoutEffect, useState } from 'react';
+import globalStyles from '../../../assets/styles/global';
+import { SafeAreaView, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
+import { translate } from '../../../locales';
+import { buildHeaderTabDark } from '../../../components/HeaderTab';
+import WeekdaySelector from '@wniemiec-component-reactnative/weekday-selector';
+import TheManBackground from '../../../components/background/TheManBackground';
+import colors from '../../../resources/colors';
 
 export default function ScheduleScreen(props) {
-    let name = props.route.params.name
-    name = name.split(' ')[0]
 
-    const navigation = useNavigation()
-    const [workoutDays, setWorkoutDays] = useState(new Set())
+  const [workoutDays, setWorkoutDays] = useState(new Set());
+  const navigation = useNavigation();
+  let name = props.route.params.name;
+  name = name.split(' ')[0];
 
-    function handleGoNext() {
-        if (workoutDays.size == 0) {
-            alert('Selecione pelo menos 1 dia')
-        }
-        else {
-            const workoutDaysList = []
-
-            workoutDays.forEach((item, index) => workoutDaysList.push(item))
-
-            navigation.navigate('LevelStarterScreen', {
-                name, workoutDays:workoutDaysList
-            })
-        }
+  function handleGoNext() {
+    if (workoutDays.size == 0) {
+      alert(translate('select_minimum_level'));
     }
+    else {
+      const workoutDaysList = [];
 
-    function handleGoBack() {
-        navigation.goBack()
+      workoutDays.forEach((item, index) => workoutDaysList.push(item));
+
+      navigation.navigate('LevelStarterScreen', {
+        name, workoutDays: workoutDaysList
+      });
     }
+  }
 
-    useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title:'',
-            headerRight:() => <TransparentButton title='Próximo >' onPress={handleGoNext} />,
-            headerLeft:() => <TransparentButton title='< Voltar' onPress={handleGoBack} />
-        })
-    },[])
-    
-    function handleWeekDay(dayWeek, selected) {
-        setWorkoutDays(set => {
-            if (selected)
-                set.add(dayWeek)
-            else
-                set.delete(dayWeek)
+  function handleGoBack() {
+    navigation.goBack();
+  }
 
-            return set
-        })
-    }
+  function handleWeekDay(dayWeek, selected) {
+    setWorkoutDays(set => {
+      if (selected)
+        set.add(dayWeek);
+      else
+        set.delete(dayWeek);
 
-    return (
-        <SafeAreaView style={[globalStyles.container, styles.background]}>
-            <View style={[styles.area]}>
-                <Text style={globalStyles.message}>Ola <Text style={globalStyles.highlight}>{name}</Text>, tudo certo?</Text>
-                <Text style={globalStyles.message}>Quais <Text style={globalStyles.highlight}>dias da semana</Text> você pretende treinar?</Text>
-                <DiasDaSemana onPress={handleWeekDay} />
-                <Text style={globalStyles.message}>Você pode alterar isso a qualquer momento</Text>
-            </View>
-        </SafeAreaView>
-    )
+      return set;
+    })
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions(buildHeaderTabDark(handleGoBack, handleGoNext));
+  }, []);
+
+  return (
+    <TheManBackground>
+      <SafeAreaView style={[globalStyles.container, globalStyles.panel]}>
+        <View style={[styles.area]}>
+          <View style={styles.messages}>
+            <Text style={globalStyles.message}>{translate('welcome_message_pt1')} <Text style={globalStyles.highlight}>{name}</Text>{translate('welcome_message_pt2')}</Text>
+            <Text style={globalStyles.message}>{translate('question_week_days')}</Text>
+          </View>
+          <WeekdaySelector onPress={handleWeekDay} bgColor={colors.accent} fgColor={colors.textPrimary} />
+          <Text style={globalStyles.message}>{translate('edit_note')}</Text>
+        </View>
+      </SafeAreaView>
+    </TheManBackground>
+  );
 }

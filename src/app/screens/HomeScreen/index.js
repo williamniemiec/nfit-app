@@ -8,8 +8,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import HomeMonthScroll from '../../components/HomeMonthScroll'
 import HomeDaysScroll from '../../components/HomeDaysScroll'
 import HomeDayStatus from '../../components/HomeDayStatus'
+import { translate } from '../../locales';
+import colors from '../../resources/colors';
+import { buildHeaderTabAccent } from '../../components/HeaderTab';
 
-const Legend = () => {
+const Legend = ({ colorMapping }) => {
     const styles = StyleSheet.create({
         area:{
             width:'100%',
@@ -46,12 +49,12 @@ const Legend = () => {
     
     return (
         <View style={styles.area}>
-            <Text style={styles.legendText}>Legenda:</Text>
-            <LegendItem color='red' text='Hoje' />
-            <LegendItem color='purple' text='Treino feito' />
-            <LegendItem color='blue' text='Treino perdido' />
-            <LegendItem color='green' text='Dia de descanso' />
-            <LegendItem color='orange' text='Dia futuro' />
+            <Text style={styles.legendText}>{translate('legend')}:</Text>
+            <LegendItem color={colorMapping.today} text={translate('today')} />
+            <LegendItem color={colorMapping.highlight} text={translate('daily_workout_done')} />
+            <LegendItem color={colorMapping.past} text={translate('daily_workout_lost')} />
+            <LegendItem color={colorMapping.invalid} text={translate('daily_workout_rest')} />
+            <LegendItem color={colorMapping.future} text={translate('daily_workout_future')} />
         </View>
     )
 }
@@ -66,16 +69,19 @@ export default function HomeScreen() {
     }
 
     useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title:'Seu progresso diário',
-            headerTitleAlign:'center',
-            headerRight:() => <ConfigButton onPress={handleConfig} />,
-            headerLeft:null
-        })
+        navigation.setOptions(buildHeaderTabAccent(null, <ConfigButton onPress={handleConfig} />, translate('daily_progress')));
     },[])
 
     let today = new Date()
+
+    const colorMapping = {
+        today: colors.dailyProgressToday,
+        highlight: colors.dailyProgressDone,
+        future: colors.dailyProgressFuture,
+        past: colors.dailyProgressLost,
+        invalid: colors.dailyProgressRest,
+        text: colors.dailyProgressText
+    };
 
     const [selectedMonth, setSelectedMonth] = useState(today.getMonth())
     const [selectedDay, setSelectedDay] = useState(today.getDate())
@@ -84,6 +90,9 @@ export default function HomeScreen() {
             <HomeMonthScroll
                 selectedMonth={selectedMonth}
                 setSelectedMonth={setSelectedMonth}
+                fgColor={colors.textPrimary}
+                bgColorActive={colors.accent}
+                bgColorInactive={`rgba(${colors.accentRgb},0.6)`}
             />
             <HomeDaysScroll
                 selectedMonth={selectedMonth}
@@ -91,6 +100,7 @@ export default function HomeScreen() {
                 setSelectedDay={setSelectedDay}
                 dailyProgress={user.dailyProgress}
                 workoutDays={user.workoutDays}
+                colorMapping={colorMapping}
             />
             <HomeDayStatus
                 selectedMonth={selectedMonth}
@@ -104,7 +114,7 @@ export default function HomeScreen() {
                 goToWorkout={() => navigation.navigate('DoTrainingNavigator')}
             />
 
-            <Legend />
+            <Legend colorMapping={colorMapping} />
         </SafeAreaView>
     )
 }

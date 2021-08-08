@@ -11,17 +11,14 @@ import Chest from '../../components/muscles/Chest'
 import Abs from '../../components/muscles/Abs'
 import Workout from '../../components/Workout'
 import PlayButton from '../../components/button/small/PlayButton'
+import { translate } from '../../locales';
+import { buildHeaderTabAccent } from '../../components/HeaderTab';
+import colors from '../../resources/colors';
+import GymEquipmentBackground from '../../components/background/GymEquipmentBackground';
 
 export default function TrainingScreen() {
     const navigation = useNavigation()
     const user = useSelector(s => s.user)
-
-    //const workoutsDone = []
-    //const workoutsDoneId = []
-    //const workoutsToDo = user.myWorkouts.filter(w => !workoutsDoneId.includes(w.id))
-
-    console.log(user)
-
 
     function handleGoBack() {
         navigation.dispatch(
@@ -37,12 +34,11 @@ export default function TrainingScreen() {
     }
 
     useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title:'Escolha seu treino',
-            headerRight:null,
-            headerLeft:() => <TransparentButton title='< Voltar' onPress={handleGoBack} />
-        })
+        navigation.setOptions(buildHeaderTabAccent(
+            <TransparentButton title={`< ${translate('back')}`} onPress={handleGoBack} fgColor={colors.textPrimary} />, 
+            null, 
+            translate('choose_workout')
+        ));
     },[])
 
     const goWorkout = (workout) => {
@@ -57,7 +53,7 @@ export default function TrainingScreen() {
 
         return (
             <View>
-                <Text style={globalStyles.message}>Seu último treino foi:</Text>
+                <Text style={globalStyles.message}>{translate('last_workout')}:</Text>
                 <View style={styles.area}>
                     <Workout
                         id={lastWorkout.id} 
@@ -86,9 +82,11 @@ export default function TrainingScreen() {
     )
 
     return (
-        <SafeAreaView style={[globalStyles.container, styles.body]}>
-            <LastWorkout />
-            <RemainingWorkouts />
-        </SafeAreaView>
+        <GymEquipmentBackground>
+            <SafeAreaView style={[globalStyles.container, styles.body]}>
+                <LastWorkout />
+                <RemainingWorkouts />
+            </SafeAreaView>
+        </GymEquipmentBackground>
     )
 }

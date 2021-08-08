@@ -11,6 +11,9 @@ import ExercisesItemEdit from '../../components/ExercisesItemEdit'
 import EditExerciseModal from './EditExerciseModal'
 import 'react-native-get-random-values'
 import {v4 as uuid} from 'uuid'
+import { translate } from '../../locales';
+import colors from '../../resources/colors';
+import { buildHeaderTabAccent } from '../../components/HeaderTab';
 
 export default (props) => {
     const isNew = (props.route.params === undefined)
@@ -38,7 +41,7 @@ export default (props) => {
 
     const handleSave = () => {
         if (name == '') {
-            alert('O treino deve ter um nome')
+            alert(translate('workout_name_required'))
             return
         }
 
@@ -101,12 +104,11 @@ export default (props) => {
     }
 
     useLayoutEffect(()=> {
-        navigation.setOptions({
-            headerShown:true,
-            title: isNew ? 'Adicionar treino' : 'Editar treino',
-            headerRight:() => <SaveButton onPress={handleSave} />,
-            headerLeft:() => <TransparentButton title='< Voltar' onPress={handleGoBack} />
-        })
+        navigation.setOptions((buildHeaderTabAccent(
+            <TransparentButton title={`< ${translate('back')}`} onPress={handleGoBack} fgColor={colors.textPrimary} />, 
+            <SaveButton onPress={handleSave} />,
+            isNew ? translate('add_workout') : translate('edit_workout')
+        )));
     },[name])
 
     const handleAddExercise = () => {
@@ -138,10 +140,10 @@ export default (props) => {
                 style={styles.input}
                 value={name}
                 onChangeText={setName}
-                placeholder='Nome do treino'
+                placeholder={translate('name')}
             />
             <View style={styles.exercisesArea}>
-                <ActionButton bgColor='#4AC34E' title='Adicionar exercício' onPress={handleAddExercise} />
+                <ActionButton bgColor={colors.accent} title={translate('add_workout')} onPress={handleAddExercise} />
                 <FlatList 
                     style={styles.exercisesList}
                     data={exercises}

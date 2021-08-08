@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165355742309",
+    "project_id": "wniemiec-app-nfit",
+    "storage_bucket": "wniemiec-app-nfit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165355742309:android:192c6f62acac8bcc1fd28c",
+        "android_client_info": {
+          "package_name": "com.nfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165355742309-826nvn6ntd333kaq5s89avujm0tkkmnl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuXbaV_dwnurehk1hkq1rG20zCPpbpPfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165355742309-826nvn6ntd333kaq5s89avujm0tkkmnl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

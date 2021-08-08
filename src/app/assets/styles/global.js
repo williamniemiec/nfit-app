@@ -10,18 +10,26 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     title:{
-        fontSize:20
+        fontSize:23,
+        color: 'white'
     },
-    background:{
-        backgroundColor:'white'
+    panel:{
+        backgroundColor:'rgba(50, 50, 50, 0.5)',
+        borderWidth:1,
+        borderColor:'#444',
+        borderRadius: 5,
+        marginHorizontal: 10,
+        marginBottom: 10
     },
     message:{
         fontSize:15,
         marginTop:10,
-        marginBottom:10
+        marginBottom:10,
+        color: 'white',
+        textAlign: 'center'
     },
     highlight:{
         fontWeight:'bold',
-        color:'black'
+        color:'white'
     }
 })

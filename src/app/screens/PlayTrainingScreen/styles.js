@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../resources/colors';
 
 export default StyleSheet.create({
     background:{
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     },
     lightBackground:{
         flex:1,
-        backgroundColor:'rgba(1, 59, 14, 0.9)'
+        backgroundColor:`rgba(${colors.accentRgb},0.5)`
     },
     header:{
         flexDirection:'row',

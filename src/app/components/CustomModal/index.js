@@ -24,7 +24,7 @@ export default function CustomModal(props) {
             animationType='fade'
         >
             <KeyboardAvoidingView style={styles.modalBoxArea}>
-                <View style={styles.modalBox}>
+                <View style={[styles.modalBox, props.style]}>
                     <ModalClose />
                     <View style={styles.modalBody}>
                         {props.children}

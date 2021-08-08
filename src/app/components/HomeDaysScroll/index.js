@@ -6,7 +6,28 @@ const screenWidth = Math.round(Dimensions.get('window').width)
 let dayWidth = Math.round(screenWidth / 9) // 1/3 da largura da tela
 let offsetWidth = Math.round((screenWidth - dayWidth) / 2)
 
-const Day = ({day, month, dailyProgress, workoutDays, onPress}) => {
+// not in workoutDays <=> invalidDays
+// colorMapping: {
+//   today,
+//   highlightedDays, 
+//   futureDays,
+//   pastDays,
+//   invalid
+//}
+
+const Day = ({day, month, dailyProgress, workoutDays, onPress, colorMapping}) => {
+    
+    if (colorMapping === undefined) {
+        colorMapping = {
+            today: 'red',
+            highlight:'purple',
+            future:'blue',
+            past:'green',
+            invalid: '#555',
+            text: 'white'
+        }
+    }
+
     const styles = StyleSheet.create({
         dayButton:{
             justifyContent:'center',
@@ -16,8 +37,7 @@ const Day = ({day, month, dailyProgress, workoutDays, onPress}) => {
             alignItems:'center',
             width:30,
             height:30,
-            borderRadius:15,
-            backgroundColor:'#ccc'
+            borderRadius:15
         },
         dayText:{
 
@@ -34,7 +54,7 @@ const Day = ({day, month, dailyProgress, workoutDays, onPress}) => {
         
         const thisDate = new Date(today.getFullYear(), month, day, 0, 0, 0, 0)
         let opacity = 1
-        let bgColor = 'white'
+        let bgColor = colorMapping.future
         let borderColor = null
         let borderWidth = 0
 
@@ -56,21 +76,22 @@ const Day = ({day, month, dailyProgress, workoutDays, onPress}) => {
                 console.log(dailyProgress)
 
                 if (dailyProgress.includes(dayFormated)) { // Verifica se o treino foi feito
-                    bgColor = 'purple'
+                    bgColor = colorMapping.highlight
                 }
                 else {
-                    bgColor = 'blue'
+                    bgColor = colorMapping.past
                 }
             }
         }
         else { // Dia de descanso
-            opacity = 0.2
+            bgColor = colorMapping.invalid;
+            opacity = 0.4;
         }
 
 
         if (thisDate.getTime() == today.getTime()) {// compara se dia enviado é o dia de hoje
-            borderColor='#ff4444'
-            borderWidth=3
+            borderColor=colorMapping.today
+            borderWidth=4
         }
         
         
@@ -78,21 +99,21 @@ const Day = ({day, month, dailyProgress, workoutDays, onPress}) => {
             backgroundColor:bgColor,
             borderWidth:borderWidth,
             borderColor:borderColor,
-            opacity:opacity 
+            opacity:opacity
         }
     }
 
     return (
         <TouchableHighlight onPress={onPress} underlayColor='transparent' style={[styles.dayButton, {width:dayWidth}]}>
             <View style={[styles.dayItem, setColor()]}>
-                <Text style={styles.dayText}>{day}</Text>
+                <Text style={[styles.dayText, {color: colorMapping.text}]}>{day}</Text>
             </View>
         </TouchableHighlight>
     )
 }
 
 
-export default ({selectedMonth, selectedDay, setSelectedDay, dailyProgress, workoutDays}) => {
+export default ({selectedMonth, selectedDay, setSelectedDay, dailyProgress, workoutDays, colorMapping}) => {
     const dayRef = useRef()
     const [days, setDays] = useState([])
     
@@ -155,6 +176,7 @@ export default ({selectedMonth, selectedDay, setSelectedDay, dailyProgress, work
                     dailyProgress={dailyProgress}
                     workoutDays={workoutDays}
                     onPress={() => handleSelectDay(day)}
+                    colorMapping={colorMapping}
                 />
             ))}
         </ScrollView>

@@ -2,10 +2,13 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     area:{
-        textAlign:'center',
-        height:'50%',
+        height: '90%',
         alignItems:'center',
-        justifyContent:'space-around'
+        justifyContent:'space-around',
+    },
+    messages: {
+        alignItems:'center',
+        justifyContent:'center'
     },
     options:{
         flex:1,
