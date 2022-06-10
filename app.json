@@ -1,0 +1,19 @@
+{
+  "name": "main",
+  "displayName": "nFit",
+  "expo": {
+    "owner": "williamniemiec",
+    "name": "williamniemiec",
+    "icon": "./src/assets/img/icon/icon.png",
+    "version": "1.0.0",
+    "slug": "nFit",
+    "ios": {
+      "bundleIdentifier": "wniemiec.app.nfit",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "wniemiec.app.nfit",
+      "versionCode": 1
+    }
+  }
+}

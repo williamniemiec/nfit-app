@@ -1,9 +1,9 @@
-require_relative '../../node_modules/react-native/scripts/react_native_pods'
-require_relative '../../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 platform :ios, '10.0'
 
-target 'ntraining' do
+target 'nfit' do
   config = use_native_modules!
 
   use_react_native!(
@@ -12,7 +12,7 @@ target 'ntraining' do
     :hermes_enabled => false
   )
 
-  target 'ntrainingTests' do
+  target 'nfitTests' do
     inherit! :complete
     # Pods for testing
   end

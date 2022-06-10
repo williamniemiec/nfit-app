@@ -47,9 +47,6 @@
     "react-test-renderer": "16.13.1"
   },
   "jest": {
-    "preset": "react-native",
-    "testMatch": [
-      "**/tests/**/*.js"
-    ]
+    "preset": "react-native"
   }
 }

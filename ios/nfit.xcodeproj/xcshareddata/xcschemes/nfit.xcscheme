@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "ntraining.app"
-               BlueprintName = "ntraining"
-               ReferencedContainer = "container:ntraining.xcodeproj">
+               BuildableName = "nfit.app"
+               BlueprintName = "nfit"
+               ReferencedContainer = "container:nfit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ntrainingTests.xctest"
-               BlueprintName = "ntrainingTests"
-               ReferencedContainer = "container:ntraining.xcodeproj">
+               BuildableName = "nfitTests.xctest"
+               BlueprintName = "nfitTests"
+               ReferencedContainer = "container:nfit.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ntraining.app"
-            BlueprintName = "ntraining"
-            ReferencedContainer = "container:ntraining.xcodeproj">
+            BuildableName = "nfit.app"
+            BlueprintName = "nfit"
+            ReferencedContainer = "container:nfit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ntraining.app"
-            BlueprintName = "ntraining"
-            ReferencedContainer = "container:ntraining.xcodeproj">
+            BuildableName = "nfit.app"
+            BlueprintName = "nfit"
+            ReferencedContainer = "container:nfit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
