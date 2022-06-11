@@ -10,8 +10,10 @@ export default StyleSheet.create({
         fontSize:20
     },
     centralImage:{
-        width:200,
-        height:200
+        width:250,
+        height:250,
+        flex: 1,
+        resizeMode: 'contain',
     },
     actionBtn:{
         flex:1

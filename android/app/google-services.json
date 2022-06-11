@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:165355742309:android:192c6f62acac8bcc1fd28c",
         "android_client_info": {
-          "package_name": "com.nfit"
+          "package_name": "wniemiec.app.nfit"
         }
       },
       "oauth_client": [

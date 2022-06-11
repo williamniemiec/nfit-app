@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles';
 import TransparentButton from '../button/TransparentButton';
 import { translate } from '../../locales';
-import colors from '../../resources/colors';
+import colors from '../../assets/colors';
 
 export function buildHeaderTabDark(handleGoBack, handleGoNext, bgColor='black', fgColor='white', title='') {
 

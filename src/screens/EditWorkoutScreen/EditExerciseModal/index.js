@@ -6,7 +6,7 @@ import CustomModal from '../../../components/CustomModal'
 import MuscleSelector from '../../../components/MuscleSelector'
 import ActionButton from '../../../components/button/ActionButton'
 import { translate } from '../../../locales';
-import colors from '../../../resources/colors';
+import colors from '../../../assets/colors';
 
 export default function EditExerciseModal({modalVisible, setModalVisible, onSave, exercise}) {
     const isNew = (exercise === undefined || exercise === null)

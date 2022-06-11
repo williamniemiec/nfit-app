@@ -6,18 +6,30 @@ import { store, persistor } from './Store'
 import { NavigationContainer } from '@react-navigation/native'
 import MainNavigator from './navigators/MainNavigator'
 
-const AppContainer = () => (
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
+const App = () => {
+  return (
+    <Storage>
+      <Navigation />
+    </Storage>
+  );
+}
+
+export default App;
+
+const Storage = ({ children }) => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      { children }
+    </PersistGate>
+  </Provider>
+);
+
+const Navigation = () => (
   <NavigationContainer>
     <MainNavigator />
   </NavigationContainer>
-)
-
-export default function App() {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <AppContainer />
-      </PersistGate>
-    </Provider>
-  )
-}
+);

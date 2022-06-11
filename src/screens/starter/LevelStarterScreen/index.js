@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { translate } from '../../../locales';
 import { buildHeaderTabDark } from '../../../components/HeaderTab';
 import TheManBackground from '../../../components/background/TheManBackground';
-import colors from '../../../resources/colors';
+import colors from '../../../assets/colors';
 
 export default function WelcomeScreen(props) {
 

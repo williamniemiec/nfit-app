@@ -1,5 +1,9 @@
 import firestore from '@react-native-firebase/firestore';
 
+
+/**
+ * Responsible for providing workout services.
+ */
 export default {
 
   getWorkoutByLevel: async (level) => {

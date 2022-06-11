@@ -9,7 +9,7 @@ import WorkoutService from '../../../services/WorkoutService';
 import { translate } from '../../../locales';
 import TheManBackground from '../../../components/background/TheManBackground';
 import { buildHeaderTabDark } from '../../../components/HeaderTab';
-import colors from '../../../config/colors';
+import colors from '../../../assets/colors';
 
 export default function TrainingScreen(props) {
   const navigation = useNavigation()

@@ -13,7 +13,7 @@ import Workout from '../../components/Workout'
 import PlayButton from '../../components/button/small/PlayButton'
 import { translate } from '../../locales';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
-import colors from '../../resources/colors';
+import colors from '../../assets/colors';
 import GymEquipmentBackground from '../../components/background/GymEquipmentBackground';
 
 export default function TrainingScreen() {

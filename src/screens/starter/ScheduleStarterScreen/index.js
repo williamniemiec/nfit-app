@@ -7,7 +7,7 @@ import { translate } from '../../../locales';
 import { buildHeaderTabDark } from '../../../components/HeaderTab';
 import WeekdaySelector from '@wniemiec-component-reactnative/weekday-selector';
 import TheManBackground from '../../../components/background/TheManBackground';
-import colors from '../../../resources/colors';
+import colors from '../../../assets/colors';
 
 export default function ScheduleScreen(props) {
 

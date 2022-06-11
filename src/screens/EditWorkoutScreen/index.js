@@ -12,7 +12,7 @@ import EditExerciseModal from './EditExerciseModal'
 import 'react-native-get-random-values'
 import {v4 as uuid} from 'uuid'
 import { translate } from '../../locales';
-import colors from '../../resources/colors';
+import colors from '../../assets/colors';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 
 export default (props) => {

@@ -9,7 +9,7 @@ import HomeMonthScroll from '../../components/HomeMonthScroll'
 import HomeDaysScroll from '../../components/HomeDaysScroll'
 import HomeDayStatus from '../../components/HomeDayStatus'
 import { translate } from '../../locales';
-import colors from '../../resources/colors';
+import colors from '../../assets/colors';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 
 const Legend = ({ colorMapping }) => {

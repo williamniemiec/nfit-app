@@ -14,7 +14,7 @@ import { CommonActions } from '@react-navigation/native'
 import RNRestart from 'react-native-restart'
 import { translate } from '../../locales';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
-import colors from '../../resources/colors';
+import colors from '../../assets/colors';
 
 export default function ConfigScreen() {
   const navigation = useNavigation()
