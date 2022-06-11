@@ -16,6 +16,10 @@ import { translate } from '../../locales';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 import colors from '../../assets/colors';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default function ConfigScreen() {
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -114,3 +118,8 @@ export default function ConfigScreen() {
     </SafeAreaView>
   )
 }
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

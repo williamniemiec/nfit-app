@@ -16,6 +16,10 @@ import { buildHeaderTabAccent } from '../../components/HeaderTab';
 import colors from '../../assets/colors';
 import GymEquipmentBackground from '../../components/background/GymEquipmentBackground';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default function TrainingScreen() {
     const navigation = useNavigation()
     const user = useSelector(s => s.user)
@@ -90,3 +94,8 @@ export default function TrainingScreen() {
         </GymEquipmentBackground>
     )
 }
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

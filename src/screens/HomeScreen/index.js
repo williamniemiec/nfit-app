@@ -12,6 +12,10 @@ import { translate } from '../../locales';
 import colors from '../../assets/colors';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 const Legend = ({ colorMapping }) => {
     const styles = StyleSheet.create({
         area:{
@@ -118,3 +122,8 @@ export default function HomeScreen() {
         </SafeAreaView>
     )
 }
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

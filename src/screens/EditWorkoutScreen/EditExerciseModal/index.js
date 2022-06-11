@@ -8,6 +8,10 @@ import ActionButton from '../../../components/button/ActionButton'
 import { translate } from '../../../locales';
 import colors from '../../../assets/colors';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default function EditExerciseModal({modalVisible, setModalVisible, onSave, exercise}) {
     const isNew = (exercise === undefined || exercise === null)
 
@@ -95,3 +99,8 @@ export default function EditExerciseModal({modalVisible, setModalVisible, onSave
         </CustomModal>
     )
 }
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

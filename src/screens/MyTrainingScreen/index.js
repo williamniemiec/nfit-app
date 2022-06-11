@@ -12,6 +12,10 @@ import { translate } from '../../locales';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 import BarbellBackground from '../../components/background/BarbellBackground';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default function TrainingScreen() {
     const dispatch = useDispatch()
     const navigation = useNavigation()
@@ -63,3 +67,7 @@ export default function TrainingScreen() {
         </BarbellBackground>
     )
 }
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

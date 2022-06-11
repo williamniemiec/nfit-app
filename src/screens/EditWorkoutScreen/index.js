@@ -15,6 +15,10 @@ import { translate } from '../../locales';
 import colors from '../../assets/colors';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default (props) => {
     const isNew = (props.route.params === undefined)
     let workout = []
@@ -160,3 +164,8 @@ export default (props) => {
         </SafeAreaView>
     )
 }
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

@@ -9,6 +9,10 @@ import { useDispatch } from 'react-redux'
 import { translate } from '../../locales';
 import FitnessBackground from '../../components/background/FitnessBackground';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default function MyTrainingScreen(props) {
     const exercisesDone = new Set()
     const workout = props.route.params.workout
@@ -99,3 +103,8 @@ export default function MyTrainingScreen(props) {
         </FitnessBackground>
     )
 }
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------

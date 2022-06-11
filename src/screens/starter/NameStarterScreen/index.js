@@ -1,40 +1,29 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import globalStyles from '../../../assets/styles/global';
 import { SafeAreaView, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
+import globalStyles from '../../../assets/styles/global';
 import { translate } from '../../../locales';
 import { buildHeaderTabDark } from '../../../components/HeaderTab';
 import TheManBackground from '../../../components/background/TheManBackground';
 
-export default function WelcomeScreen() {
-  const navigation = useNavigation();
-  const [name, setName] = useState('');
 
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
+const NameStarterScreen = () => {
+  
+  const [name, setName] = useState('');
+  const navigation = useNavigation();
   const refName = useRef(name);
 
-  const handleGoNext = () => {
-    if (refName.current === '') {
-      alert(translate('name_required'));
-    }
-    else {
-      navigation.navigate('ScheduleStarterScreen', {
-        name: refName.current
-      })
-    }
-  }
-
-  function handleGoBack() {
-    navigation.goBack();
-  }
-
-  function changeName(newName) {
-    setName(newName);
-    refName.current = newName;
-  }
-
   useLayoutEffect(() => {
-    navigation.setOptions(buildHeaderTabDark(handleGoBack, handleGoNext));
+    navigation.setOptions(
+      buildHeaderTabDark(
+        () => handleGoBack(navigation), 
+        () => handleGoNext(navigation, refName)
+      )
+    );
   }, []);
 
   return (
@@ -46,13 +35,39 @@ export default function WelcomeScreen() {
             style={styles.input}
             placeholder={translate('name')}
             placeholderTextColor='white'
-            onChangeText={changeName}
+            onChangeText={(text) => changeName(text, refName, setName)}
             autoFocus={true}
             autoCapitalize="words"
-            onSubmitEditing={handleGoNext}
+            onSubmitEditing={() => handleGoNext(navigation, refName)}
           />
         </View>
       </SafeAreaView>
     </TheManBackground>
   )
+}
+
+export default NameStarterScreen;
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function handleGoNext(navigation, refName) {
+  if (refName.current === '') {
+    alert(translate('name_required'));
+  }
+  else {
+    navigation.navigate('ScheduleStarterScreen', {
+      name: refName.current
+    })
+  }
+}
+
+function handleGoBack(navigation) {
+  navigation.goBack();
+}
+
+function changeName(newName, refName, setName) {
+  setName(newName);
+  refName.current = newName;
 }
