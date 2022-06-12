@@ -1,5 +1,5 @@
-export function headerStyle({route}) {
-    return ({
-        headerTitleAlign:'center'
-    })
+export function headerStyle() {
+  return {
+    headerTitleAlign: 'center',
+  };
 }

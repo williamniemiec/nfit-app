@@ -143,6 +143,7 @@ function handleModalSave(
     alert(translate('all_fields_required'));
     return;
   }
+  
   onSave();
   setModalVisible(false);
   resetModal(setName, setMuscle, setReps, setLoad);
@@ -150,10 +151,10 @@ function handleModalSave(
 
 function isAllRequiredFieldsFilled(name, muscle, sets, reps, load) {
   return  name != '' 
-    && muscle != ''
-    && sets != ''
-    && reps != ''
-    && load != '';
+          && muscle != ''
+          && sets != ''
+          && reps != ''
+          && load != '';
 }
 
 function resetModal(setName, setMuscle, setReps, setLoad) {

@@ -1,3 +1,3 @@
 export const headerStyle = {
-    headerShown:false
-}
+  headerShown: false,
+};
