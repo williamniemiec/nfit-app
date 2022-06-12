@@ -17,7 +17,6 @@ import { buildHeaderTabAccent } from '../../components/HeaderTab';
 //        Components
 //-----------------------------------------------------------------------------
 const HomeScreen = () => {
-
   const today = new Date();
   const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
   const [selectedDay, setSelectedDay] = useState(today.getDate());
@@ -72,7 +71,6 @@ const DaySelector = ({
   user,
   navigation,
   dispatch
-
 }) => {
   const colorMapping = {
     today: colors.dailyProgressToday,

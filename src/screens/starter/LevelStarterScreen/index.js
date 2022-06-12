@@ -14,7 +14,6 @@ import TheManBackground from '../../../components/background/TheManBackground';
 //        Components
 //-----------------------------------------------------------------------------
 const LevelStarterScreen = (props) => {
-
   const [level, setLevel] = useState(-1);
   const navigation = useNavigation();
   const levelRef = useRef(level);

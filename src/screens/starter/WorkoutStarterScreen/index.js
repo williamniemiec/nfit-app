@@ -15,7 +15,6 @@ import WorkoutService from '../../../services/WorkoutService';
 //        Components
 //-----------------------------------------------------------------------------
 const WorkoutStarterScreen = (props) => {
-
   const [workouts, setWorkouts] = useState([])
   const [loading, setLoading] = useState(true);
   const [prebuiltWorkouts, setPrebuiltWorkouts] = useState([]);

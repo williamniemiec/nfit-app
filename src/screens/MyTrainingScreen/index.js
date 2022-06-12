@@ -17,7 +17,6 @@ import BarbellBackground from '../../components/background/BarbellBackground';
 //        Components
 //-----------------------------------------------------------------------------
 const MyTrainingScreen = () => {
-
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const user = useSelector((state) => state.user);

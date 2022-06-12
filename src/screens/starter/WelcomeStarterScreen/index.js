@@ -12,7 +12,6 @@ import TheManBackground from '../../../components/background/TheManBackground';
 //        Components
 //-----------------------------------------------------------------------------
 const WelcomeStarterScreen = () => {
-
   const navigation = useNavigation();
 
   return (

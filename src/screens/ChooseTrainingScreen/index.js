@@ -16,88 +16,93 @@ import GymEquipmentBackground from '../../components/background/GymEquipmentBack
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function TrainingScreen() {
+const ChooseTrainingScreen = () => {
   const navigation = useNavigation();
   const user = useSelector((s) => s.user);
-
-  function handleGoBack() {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [
-          {
-            name: 'HomeNavigator',
-          },
-        ],
-      }),
-    );
-  }
 
   useLayoutEffect(() => {
     navigation.setOptions(
       buildHeaderTabAccent(
         <TransparentButton
           title={`< ${translate('back')}`}
-          onPress={handleGoBack}
+          onPress={() => handleGoBack(navigation)}
           fgColor={colors.textPrimary}
         />,
         null,
-        translate('choose_workout'),
-      ),
+        translate('choose_workout')
+      )
     );
   }, []);
-
-  const goWorkout = (workout) => {
-    navigation.navigate('PlayTrainingScreen', {workout});
-  };
-
-  const LastWorkout = () => {
-    if (!user.lastWorkout) return <View></View>;
-
-    const lastWorkout = user.myWorkouts.find((w) => w.id == user.lastWorkout);
-
-    return (
-      <View>
-        <Text style={globalStyles.message}>{translate('last_workout')}:</Text>
-        <View style={styles.area}>
-          <Workout
-            id={lastWorkout.id}
-            name={lastWorkout.name}
-            exercises={lastWorkout.exercises}
-          />
-        </View>
-      </View>
-    );
-  };
-
-  const RemainingWorkouts = () => (
-    <ScrollView style={[globalStyles.container, styles.body]}>
-      {user.myWorkouts.map(
-        (workout, index) =>
-          workout.id != user.lastWorkout && (
-            <View style={styles.area} key={index}>
-              <Workout
-                id={workout.id}
-                name={workout.name}
-                exercises={workout.exercises}
-              />
-              <PlayButton onPress={() => goWorkout(workout)} />
-            </View>
-          ),
-      )}
-    </ScrollView>
-  );
 
   return (
     <GymEquipmentBackground>
       <SafeAreaView style={[globalStyles.container, styles.body]}>
-        <LastWorkout />
-        <RemainingWorkouts />
+        <LastWorkout user={user} />
+        <RemainingWorkouts user={user} navigation={navigation} />
       </SafeAreaView>
     </GymEquipmentBackground>
   );
 }
 
+export default ChooseTrainingScreen;
+
+const LastWorkout = ({ user }) => {
+  if (!user.lastWorkout) {
+    return <View></View>;
+  }
+
+  const workout = user.myWorkouts.find((w) => w.id == user.lastWorkout);
+
+  return (
+    <View>
+      <Text style={globalStyles.message}>
+        { translate('last_workout') }:
+      </Text>
+      <View style={styles.area}>
+        <Workout
+          id={workout.id}
+          name={workout.name}
+          exercises={workout.exercises}
+        />
+      </View>
+    </View>
+  );
+}
+
+const RemainingWorkouts = ({ user, navigation }) => (
+  <ScrollView style={[globalStyles.container, styles.body]}>
+    {user.myWorkouts.map((workout, index) =>
+        workout.id != user.lastWorkout && (
+          <View style={styles.area} key={index}>
+            <Workout
+              id={workout.id}
+              name={workout.name}
+              exercises={workout.exercises}
+            />
+            <PlayButton onPress={() => goWorkout(workout, navigation)} />
+          </View>
+        ),
+    )}
+  </ScrollView>
+);
+
+
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function handleGoBack(navigation) {
+  navigation.dispatch(
+    CommonActions.reset({
+      index: 1,
+      routes: [
+        {
+          name: 'HomeNavigator',
+        }
+      ]
+    })
+  );
+}
+
+function goWorkout(workout, navigation) {
+  navigation.navigate('PlayTrainingScreen', { workout });
+}

@@ -19,7 +19,6 @@ import FitnessBackground from '../../components/background/FitnessBackground';
 //        Components
 //-----------------------------------------------------------------------------
 const PlayTrainingScreen = (props) => {
-
   const exercisesDone = new Set();
   const workout = props.route.params.workout;
   const navigation = useNavigation();

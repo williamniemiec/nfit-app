@@ -14,7 +14,6 @@ import TheManBackground from '../../../components/background/TheManBackground';
 //        Components
 //-----------------------------------------------------------------------------
 const ScheduleStarterScreen = (props) => {
-
   const [workoutDays, setWorkoutDays] = useState(new Set());
   const navigation = useNavigation();
   const name = props.route.params.name.split(' ')[0];

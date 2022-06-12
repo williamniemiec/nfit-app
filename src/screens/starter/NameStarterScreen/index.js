@@ -12,7 +12,6 @@ import TheManBackground from '../../../components/background/TheManBackground';
 //        Components
 //-----------------------------------------------------------------------------
 const NameStarterScreen = () => {
-  
   const [name, setName] = useState('');
   const navigation = useNavigation();
   const refName = useRef(name);

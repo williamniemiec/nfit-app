@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, SafeAreaView, TextInput, FlatList } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import 'react-native-get-random-values';
+import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { v4 as uuid } from 'uuid';
 import styles from './styles';
@@ -19,67 +19,190 @@ import { buildHeaderTabAccent } from '../../components/HeaderTab';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default (props) => {
-  const isNew = props.route.params === undefined;
-  let workout = [];
-
-  if (!isNew) {
-    workout = props.route.params.workout;
-  }
-
-  const [id, setId] = useState(isNew ? uuid() : workout.id);
+const EditWorkoutScreen = (props) => {
+  const isNew = (props.route.params === undefined);
+  const id = isNew ? uuid() : workout.id;
+  const workout = isNew ? [] : props.route.params.workout;
   const [name, setName] = useState(isNew ? '' : workout.name);
-  const [exercises, setExercises] = useState(
-    isNew ? [] : workout.exercises === undefined ? [] : workout.exercises,
-  );
+  const [exercises, setExercises] = useState(getWorkoutExercises(isNew, workout));
   const [editExercise, setEditExercise] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-
   const navigation = useNavigation();
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  function handleGoBack() {
-    navigation.goBack();
+  useLayoutEffect(() => {
+    navigation.setOptions(
+      buildHeaderTabAccent(
+        <TransparentButton
+          title={`< ${translate('back')}`}
+          onPress={() => handleGoBack(navigation)}
+          fgColor={colors.textPrimary}
+        />,
+        <SaveButton onPress={() => handleSave(
+          navigation, 
+          dispatch, 
+          isNew, 
+          id, 
+          name, 
+          exercises
+        )} />,
+        isNew ? translate('add_workout') : translate('edit_workout'),
+      ),
+    );
+  }, [name]);
+
+  return (
+    <SafeAreaView style={[globalStyles.container, styles.body]}>
+      <EditExerciseModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        onSave={(
+          modalId, 
+          modalName, 
+          modalMuscle, 
+          modalSets, 
+          modalReps, 
+          modalLoad
+        ) => handleModalSave(
+          modalId, 
+          modalName,
+          modalMuscle, 
+          modalSets, 
+          modalReps, 
+          modalLoad, 
+          isNew,
+          exercises, 
+          setExercises
+        )}
+        exercise={editExercise}
+      />
+      <ExerciseName name={name} setName={setName} />
+      <View style={styles.exercisesArea}>
+        <NewExerciseButton onPress={() => handleAddExercise(
+          setEditExercise, 
+          setModalVisible
+        )} />
+        <Exercises 
+          exercises={exercises} 
+          setExercises={setExercises}
+          setEditExercise={setEditExercise} 
+          setModalVisible={setModalVisible} 
+        />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default EditWorkoutScreen;
+
+const ExerciseName = ({ name, setName }) => (
+  <TextInput
+    style={styles.input}
+    value={name}
+    onChangeText={setName}
+    placeholder={translate('name')}
+  />
+);
+
+const NewExerciseButton = ({ onPress }) => (
+  <ActionButton
+    bgColor={colors.accent}
+    title={translate('add_workout')}
+    onPress={onPress}
+  />
+);
+
+const Exercises = ({ exercises, setExercises, setEditExercise, setModalVisible }) => (
+  <FlatList
+    style={styles.exercisesList}
+    data={exercises}
+    renderItem={({ item }) => (
+      <ExercisesItemEdit
+        data={item}
+        editExercise={() => handleEditExercise(item, setEditExercise, setModalVisible)}
+        removeExercise={() => removeExercise(item, exercises, setExercises)}
+      />
+    )}
+    keyExtractor={(item) => item.name}
+  />
+);
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function getWorkoutExercises(isNew, workout) {
+  if (isNew || (workout.exercises === undefined)) {
+    return [];
   }
 
-  const handleSave = () => {
-    if (name == '') {
-      alert(translate('workout_name_required'));
-      return;
-    }
+  return workout.exercises;
+}
 
-    if (isNew) {
-      dispatch({
-        type: 'ADD_MY_WORKOUTS',
-        payload: {
-          id: id,
-          name: name,
-          exercises: exercises,
-        },
-      });
-    } else {
-      dispatch({
-        type: 'UPDATE_MY_WORKOUTS',
-        payload: {
-          id: id,
-          name: name,
-          exercises: exercises,
-        },
-      });
-    }
-    navigation.goBack();
-  };
+function handleGoBack(navigation) {
+  navigation.goBack();
+}
 
-  const handleModalSave = (
-    modalId,
-    modalName,
-    modalMuscle,
-    modalSets,
-    modalReps,
-    modalLoad,
-  ) => {
-    if (isNew) {
+function handleSave(navigation, dispatch, isNew, id, name, exercises) {
+  if (name == '') {
+    alert(translate('workout_name_required'));
+    return;
+  }
+
+  if (isNew) {
+    dispatch({
+      type: 'ADD_MY_WORKOUTS',
+      payload: {
+        id: id,
+        name: name,
+        exercises: exercises,
+      },
+    });
+  } else {
+    dispatch({
+      type: 'UPDATE_MY_WORKOUTS',
+      payload: {
+        id: id,
+        name: name,
+        exercises: exercises,
+      },
+    });
+  }
+  navigation.goBack();
+};
+
+function handleModalSave(
+  modalId,
+  modalName,
+  modalMuscle,
+  modalSets,
+  modalReps,
+  modalLoad,
+  isNew,
+  exercises,
+  setExercises
+) {
+  if (isNew) {
+    exercises.push({
+      id: uuid(),
+      name: modalName,
+      muscle: modalMuscle,
+      sets: modalSets,
+      reps: modalReps,
+      load: modalLoad,
+    });
+  } 
+  else {
+    const index = exercises.findIndex((e) => e.id == modalId);
+
+    if (index > -1) {
+      exercises[index].name = modalName;
+      exercises[index].muscle = modalMuscle;
+      exercises[index].sets = modalSets;
+      exercises[index].reps = modalReps;
+      exercises[index].load = modalLoad;
+    } 
+    else {
       exercises.push({
         id: uuid(),
         name: modalName,
@@ -88,98 +211,24 @@ export default (props) => {
         reps: modalReps,
         load: modalLoad,
       });
-    } else {
-      const index = exercises.findIndex((e) => e.id == modalId);
-      if (index > -1) {
-        exercises[index].name = modalName;
-        exercises[index].muscle = modalMuscle;
-        exercises[index].sets = modalSets;
-        exercises[index].reps = modalReps;
-        exercises[index].load = modalLoad;
-      } else {
-        // lista de exerc estava vazia
-        exercises.push({
-          id: uuid(),
-          name: modalName,
-          muscle: modalMuscle,
-          sets: modalSets,
-          reps: modalReps,
-          load: modalLoad,
-        });
-      }
     }
+  }
 
-    setExercises(exercises);
-  };
+  setExercises(exercises);
+}
 
-  useLayoutEffect(() => {
-    navigation.setOptions(
-      buildHeaderTabAccent(
-        <TransparentButton
-          title={`< ${translate('back')}`}
-          onPress={handleGoBack}
-          fgColor={colors.textPrimary}
-        />,
-        <SaveButton onPress={handleSave} />,
-        isNew ? translate('add_workout') : translate('edit_workout'),
-      ),
-    );
-  }, [name]);
+function handleAddExercise(setEditExercise, setModalVisible) {
+  setEditExercise(null);
+  setModalVisible(true);
+}
 
-  const handleAddExercise = () => {
-    setEditExercise(null);
-    setModalVisible(true);
-  };
+function removeExercise(exercise, exercises, setExercises) {
+  const newExercises = exercises.filter((ex) => ex.id != exercise.id);
 
-  const removeExercise = (exercise) => {
-    const newExercises = exercises.filter((ex) => ex.id != exercise.id);
+  setExercises(newExercises);
+}
 
-    setExercises(newExercises);
-  };
-
-  const handleEditExercise = (exercise) => {
-    setEditExercise(exercise);
-    setModalVisible(true);
-  };
-
-  return (
-    <SafeAreaView style={[globalStyles.container, styles.body]}>
-      <EditExerciseModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        onSave={handleModalSave}
-        exercise={editExercise}
-      />
-
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={setName}
-        placeholder={translate('name')}
-      />
-      <View style={styles.exercisesArea}>
-        <ActionButton
-          bgColor={colors.accent}
-          title={translate('add_workout')}
-          onPress={handleAddExercise}
-        />
-        <FlatList
-          style={styles.exercisesList}
-          data={exercises}
-          renderItem={({item}) => (
-            <ExercisesItemEdit
-              data={item}
-              editExercise={() => handleEditExercise(item)}
-              removeExercise={() => removeExercise(item)}
-            />
-          )}
-          keyExtractor={(item) => item.name}
-        />
-      </View>
-    </SafeAreaView>
-  );
-};
-
-//-----------------------------------------------------------------------------
-//        Functions
-//-----------------------------------------------------------------------------
+function handleEditExercise(exercise, setEditExercise, setModalVisible) {
+  setEditExercise(exercise);
+  setModalVisible(true);
+}
