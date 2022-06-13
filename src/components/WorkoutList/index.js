@@ -1,71 +1,69 @@
-import React from 'react'
-import { View } from 'react-native'
-import TrainingSet from '../TrainingSet'
-import Abs from '../muscles/Abs'
-import Back from '../muscles/Back'
-import Biceps from '../muscles/Biceps'
-import Chest from '../muscles/Chest'
-import Gluteos from '../muscles/Gluteos'
-import Legs from '../muscles/Legs'
-import Shoulders from '../muscles/Shoulders'
-import Triceps from '../muscles/Triceps'
-import styles from './styles'
-import presetWorkouts from '../../assets/presetWorkouts.json'
+import React from 'react';
+import TrainingSet from '../TrainingSet';
+import muscleMapping from '../muscles';
+import presetWorkouts from '../../assets/presetWorkouts.json';
 
-const muscleMapping = new Map()
-muscleMapping.set("ABS", <Abs />)
-muscleMapping.set("BACK", <Back />)
-muscleMapping.set("BICEPS", <Biceps />)
-muscleMapping.set("CHEST", <Chest />)
-muscleMapping.set("GLUTEOS", <Gluteos />)
-muscleMapping.set("LEGS", <Legs />)
-muscleMapping.set("SHOULDERS", <Shoulders />)
-muscleMapping.set("TRICEPS", <Triceps />)
 
-const workoutList = new Map()
+//-----------------------------------------------------------------------------
+//        Constants
+//-----------------------------------------------------------------------------
+const workoutList = new Map();
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 const TrainingItem = ({id, name, exercises}) => {
-    return (
-        <TrainingSet title={name} icons={generateMuscleListOfReactElements(exercises)} />
-    )
-}
+  return (
+    <TrainingSet
+      title={name}
+      icons={generateMuscleListOfReactElements(exercises)}
+    />
+  );
+};
 
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
 function generateListOfReactElements(elements) {
-    const rendered = [];
-    const getItems = elements.map((item, key) => {
-        const component = React.createElement(item.type, {key:key});
-        rendered.push(component);
-    });
+  const rendered = [];
+  
+  elements.map((item, key) => {
+    rendered.push(React.createElement(item.type, {key: key}));
+  });
 
-    return rendered
+  return rendered;
 }
 
 export function generateMuscleListOfReactElements(exercises) {
-    const muscleNames = []
-    
-    for (let exercise of exercises) {
-        if (!muscleNames.includes(muscleMapping.get(exercise.muscle.toUpperCase())))
-            muscleNames.push(muscleMapping.get(exercise.muscle.toUpperCase()))
-    }
+  const muscleNames = [];
 
-    return generateListOfReactElements(muscleNames)
-}
+  for (let exercise of exercises) {
+    if (!muscleNames.includes(muscleMapping.get(exercise.muscle.toUpperCase())))
+      muscleNames.push(muscleMapping.get(exercise.muscle.toUpperCase()));
+  }
 
-const addWorkout = (workout, index) => {
-    const workoutComponent = <TrainingItem 
-        item={workout} 
-        id={workout.id} 
-        name={workout.name} 
-        exercises={workout.exercises} 
-    />
-
-    workoutList.set(workout.id, workoutComponent) 
+  return generateListOfReactElements(muscleNames);
 }
 
 export default function generateWorkoutList() {
-    for (let workout of presetWorkouts) {
-        addWorkout(workout)
-    }
-    
-    return workoutList
+  for (let workout of presetWorkouts) {
+    addWorkout(workout);
+  }
+
+  return workoutList;
+}
+
+function addWorkout(workout) {
+  const workoutComponent = (
+    <TrainingItem
+      item={workout}
+      id={workout.id}
+      name={workout.name}
+      exercises={workout.exercises}
+    />
+  );
+
+  workoutList.set(workout.id, workoutComponent);
 }

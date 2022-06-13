@@ -1,8 +1,12 @@
-import { Platform, NativeModules } from 'react-native'
-import I18n from 'i18n-js'
-import en from './en-US' 
-import pt from './pt-BR' 
+import { Platform, NativeModules } from 'react-native';
+import I18n from 'i18n-js';
+import en from './en-US';
+import pt from './pt-BR';
 
+
+//-----------------------------------------------------------------------------
+//        Constants
+//-----------------------------------------------------------------------------
 const normalizeTranslate = {
   'en_US': 'en_US',
   'pt_BR': 'pt_BR',
@@ -10,26 +14,38 @@ const normalizeTranslate = {
   'pt_US': 'pt_BR',
 }
 
-const getLanguageByDevice = () => {
-  return Platform.OS === 'ios'
+I18n.translations = {
+  'en_US': { ...I18n.translations['en_US'], ...en },
+  'pt_BR': pt,
+}
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function setLanguageToI18n() {
+  const systemLanguage = normalizeTranslate[getLanguageByDevice()];
+  
+  if (hasCompatibilityWithLanguage(systemLanguage)) {
+    I18n.locale = systemLanguage;
+  }
+  else {
+    I18n.defaultLocale = 'en_US';
+  }
+}
+
+setLanguageToI18n();
+
+export function translate(key) {
+  return I18n.t(key);
+}
+
+function getLanguageByDevice() {
+  return (Platform.OS === 'ios')
     ? NativeModules.SettingsManager.settings.AppleLocale 
     : NativeModules.I18nManager.localeIdentifier 
 }
 
-I18n.translations = {
-  'en_US': {...I18n.translations['en_US'], ...en},
-  'pt_BR': pt,
+function hasCompatibilityWithLanguage(language) {
+  return I18n.translations.hasOwnProperty(language);
 }
-
-const setLanguageToI18n = () => {
-  const language = getLanguageByDevice()
-  const translateNormalize = normalizeTranslate[language]
-  const iHaveThisLanguage = I18n.translations.hasOwnProperty(translateNormalize)
-  iHaveThisLanguage
-    ? I18n.locale = translateNormalize
-    : I18n.defaultLocale = 'en_US'
-}
-
-setLanguageToI18n()
-
-export const translate = key => I18n.t(key)

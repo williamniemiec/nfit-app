@@ -1,4 +1,3 @@
-// Your web app's Firebase configuration
 export default {
   apiKey: "AIzaSyDZT907LMgNWdUwqeaARocqBD15vUh2pDQ",
   authDomain: "wniemiec-app-nfit.firebaseapp.com",

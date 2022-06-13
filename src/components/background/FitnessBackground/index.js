@@ -2,6 +2,10 @@ import React from 'react';
 import { ImageBackground, StatusBar } from 'react-native';
 import styles from './styles';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export default function FitnessBackground({ children }) {
   
   return (

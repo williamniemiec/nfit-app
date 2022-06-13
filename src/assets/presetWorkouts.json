@@ -1,7 +1,7 @@
 [
   {
     "id":"123",
-    "name":"Treino Iniciante A",
+    "name":"Default training A",
     "exercises":[
       {"id":1, "name":"Incline bench press", "muscle":"chest", "sets":"3", "reps":"10", "load":"20"},
       {"id":2, "name":"Ex 2", "muscle":"biceps", "sets":"2", "reps":"12", "load":"10"}
@@ -9,16 +9,16 @@
   },
   {
     "id":"456",
-    "name":"Treino Iniciante B",
+    "name":"Default training B",
     "exercises":[
-      {"id":1, "name":"Supino Inclinado", "muscle":"chest", "sets":"3", "reps":"10", "load":"20"}
+      {"id":1, "name":"Incline bench press", "muscle":"chest", "sets":"3", "reps":"10", "load":"20"}
     ]
   },
   {
     "id":"645",
-    "name":"Treino Iniciante C",
+    "name":"Default training C",
     "exercises":[
-      {"id":1, "name":"Supino Inclinado", "muscle":"chest", "sets":"3", "reps":"10", "load":"20"}
+      {"id":1, "name":"Incline bench press", "muscle":"chest", "sets":"3", "reps":"10", "load":"20"}
     ]
   }
 ]
