@@ -1,134 +1,21 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
+import Day from './day';
+
+
+//-----------------------------------------------------------------------------
+//        Constants
+//-----------------------------------------------------------------------------
+const screenWidth = Math.round(Dimensions.get('window').width);
+const dayWidth = Math.round(screenWidth / 9);
+const offsetWidth = Math.round((screenWidth - dayWidth) / 2);
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const screenWidth = Math.round(Dimensions.get('window').width);
-let dayWidth = Math.round(screenWidth / 9); // 1/3 da largura da tela
-let offsetWidth = Math.round((screenWidth - dayWidth) / 2);
-
-// not in workoutDays <=> invalidDays
-// colorMapping: {
-//   today,
-//   highlightedDays,
-//   futureDays,
-//   pastDays,
-//   invalid
-//}
-
-const Day = ({
-  day,
-  month,
-  dailyProgress,
-  workoutDays,
-  onPress,
-  colorMapping,
-}) => {
-  if (colorMapping === undefined) {
-    colorMapping = {
-      today: 'red',
-      highlight: 'purple',
-      future: 'blue',
-      past: 'green',
-      invalid: '#555',
-      text: 'white',
-    };
-  }
-
-  const styles = StyleSheet.create({
-    dayButton: {
-      justifyContent: 'center',
-    },
-    dayItem: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 30,
-      height: 30,
-      borderRadius: 15,
-    },
-    dayText: {},
-  });
-
-  const setColor = () => {
-    const today = new Date();
-    // Zera as horas para realizar futuras comparações
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
-
-    const thisDate = new Date(today.getFullYear(), month, day, 0, 0, 0, 0);
-    let opacity = 1;
-    let bgColor = colorMapping.future;
-    let borderColor = null;
-    let borderWidth = 0;
-
-    if (workoutDays.includes(thisDate.getDay())) {
-      if (thisDate.getTime() <= today.getTime()) {
-        // Verifica se esta em um dia passado diferente de hoje
-        let thisYear = thisDate.getFullYear();
-        let thisMonth = thisDate.getMonth() + 1;
-        let thisDay = thisDate.getDate();
-
-        // força 0 a esquerda
-        if (thisMonth < 10) thisMonth = '0' + thisMonth;
-
-        if (thisDay < 10) thisDay = '0' + thisDay;
-
-        let dayFormated = `${thisYear}-${thisMonth}-${thisDay}`;
-        console.log(dayFormated);
-        console.log(dailyProgress);
-
-        if (dailyProgress.includes(dayFormated)) {
-          // Verifica se o treino foi feito
-          bgColor = colorMapping.highlight;
-        } else {
-          bgColor = colorMapping.past;
-        }
-      }
-    } else {
-      // Dia de descanso
-      bgColor = colorMapping.invalid;
-      opacity = 0.4;
-    }
-
-    if (thisDate.getTime() == today.getTime()) {
-      // compara se dia enviado é o dia de hoje
-      borderColor = colorMapping.today;
-      borderWidth = 4;
-    }
-
-    return {
-      backgroundColor: bgColor,
-      borderWidth: borderWidth,
-      borderColor: borderColor,
-      opacity: opacity,
-    };
-  };
-
-  return (
-    <TouchableHighlight
-      onPress={onPress}
-      underlayColor="transparent"
-      style={[styles.dayButton, {width: dayWidth}]}>
-      <View style={[styles.dayItem, setColor()]}>
-        <Text style={[styles.dayText, {color: colorMapping.text}]}>{day}</Text>
-      </View>
-    </TouchableHighlight>
-  );
-};
-
-export default ({
+const HomeDaysScroll = ({
   selectedMonth,
   selectedDay,
   setSelectedDay,
@@ -139,47 +26,20 @@ export default ({
   const dayRef = useRef();
   const [days, setDays] = useState([]);
 
-  const handleScrollEnd = (event) => {
-    let posX = event.nativeEvent.contentOffset.x;
-    const selectedIdx = Math.round(posX / dayWidth + 1); // +1 pq dia 1 deve começar com posição 1
-
-    setSelectedDay(selectedIdx);
-  };
-
-  const scrollToDay = (day) => {
-    let posX = (day - 1) * dayWidth; // -1 pq dia começa com 1
-
-    dayRef.current.scrollTo({
-      x: posX,
-      y: 0,
-      animated: true,
-    });
-  };
-
   useLayoutEffect(() => {
-    let daysInMonth = new Date(
-      new Date().getFullYear(),
-      selectedMonth + 1,
-      0,
-    ).getDate(); // dia=0 pq pega ultimo dia do mes anterior
-    const daysList = [];
+    let daysInMonth = getLastMonth(selectedMonth);
 
-    for (let i = 1; i <= daysInMonth; i++) {
-      daysList.push(i);
-    }
-    setDays(daysList);
-
+    setDays(getDaysOfMonthInArray(daysInMonth));
     setTimeout(() => {
-      // Necessário para dar tempo do scrollview carregar
-      if (selectedMonth == new Date().getMonth()) scrollToDay(selectedDay);
-      else scrollToDay(1);
+      // It is necessary because of ScrollView render time
+      if (selectedMonth == getCurrentMonth()) {
+        scrollToDay(selectedDay, dayRef);
+      }
+      else {
+        scrollToDay(1, dayRef);
+      }
     }, 100);
   }, [selectedMonth]);
-
-  const handleSelectDay = (day) => {
-    scrollToDay(day);
-    setSelectedDay(day);
-  };
 
   return (
     <ScrollView
@@ -187,24 +47,74 @@ export default ({
       ref={dayRef}
       showsHorizontalScrollIndicator={false}
       decelerationRate="fast"
-      snapToInterval={dayWidth} // Impede de parar no meio
+      snapToInterval={dayWidth} // Avoids stopping on the middle of screen
       contentContainerStyle={{
         paddingLeft: offsetWidth,
         paddingRight: offsetWidth,
       }}
-      onMomentumScrollEnd={handleScrollEnd}
+      onMomentumScrollEnd={(event) => handleScrollEnd(event, setSelectedDay)}
       style={styles.area}>
-      {days.map((day, index) => (
+      {days.map((day, _) => (
         <Day
           key={day}
           day={day}
           month={selectedMonth}
           dailyProgress={dailyProgress}
           workoutDays={workoutDays}
-          onPress={() => handleSelectDay(day)}
+          onPress={() => handleSelectDay(day, dayRef, setSelectedDay)}
           colorMapping={colorMapping}
         />
       ))}
     </ScrollView>
   );
 };
+
+export default HomeDaysScroll;
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function getLastMonth(selectedMonth) {
+  return new Date(
+    new Date().getFullYear(),
+    selectedMonth + 1,
+    0,
+  ).getDate(); 
+}
+
+function getDaysOfMonthInArray(lastMonthDay) {
+  const daysList = [];
+
+  for (let i = 1; i <= lastMonthDay; i++) {
+    daysList.push(i);
+  }
+
+  return daysList;
+}
+
+function getCurrentMonth() {
+  return new Date().getMonth();
+}
+
+function handleScrollEnd(event, setSelectedDay) {
+  const horizontalPosition = event.nativeEvent.contentOffset.x;
+  const selectedIndex = Math.round(horizontalPosition / dayWidth + 1);
+
+  setSelectedDay(selectedIndex);
+}
+
+function scrollToDay(day, dayRef) {
+  const horizontalPosition = (day - 1) * dayWidth;
+
+  dayRef.current.scrollTo({
+    x: horizontalPosition,
+    y: 0,
+    animated: true,
+  });
+}
+
+function handleSelectDay(day, dayRef, setSelectedDay) {
+  scrollToDay(day, dayRef);
+  setSelectedDay(day);
+}

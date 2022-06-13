@@ -19,4 +19,14 @@ export default StyleSheet.create({
   monthLabel: {
     color: 'black',
   },
+  dayButton: {
+    justifyContent: 'center',
+  },
+  dayItem: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+  },
 });
