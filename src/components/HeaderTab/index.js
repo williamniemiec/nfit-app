@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './styles';
 import TransparentButton from '../button/TransparentButton';
-import {translate} from '../../locales';
+import { translate } from '../../locales';
 import colors from '../../assets/colors';
 
+
 //-----------------------------------------------------------------------------
-//        Components
+//        Functions
 //-----------------------------------------------------------------------------
 export function buildHeaderTabDark(
   handleGoBack,
@@ -14,14 +15,14 @@ export function buildHeaderTabDark(
   fgColor = 'white',
   title = '',
 ) {
-  const headerRightComponent = handleGoNext ? (
+  const HeaderRightComponent = handleGoNext ? (
     <TransparentButton
       title={`${translate('next')} >`}
       onPress={handleGoNext}
       fgColor="white"
     />
   ) : null;
-  const headerLeftComponent = handleGoBack ? (
+  const HeaderLeftComponent = handleGoBack ? (
     <TransparentButton
       title={`< ${translate('back')}`}
       onPress={handleGoBack}
@@ -30,8 +31,8 @@ export function buildHeaderTabDark(
   ) : null;
 
   return buildHeaderTab(
-    headerLeftComponent,
-    headerRightComponent,
+    HeaderLeftComponent,
+    HeaderRightComponent,
     title,
     bgColor,
     fgColor,

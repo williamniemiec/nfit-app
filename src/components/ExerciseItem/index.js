@@ -1,41 +1,63 @@
-import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
 import styles from './styles';
 import Muscles from '../muscles';
 import CheckButton from '../button/small/CheckButton';
-import {translate} from '../../locales';
+import { translate } from '../../locales';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function ExerciseItem({data, index, onCheck}) {
+const ExerciseItem = ({data, index, onCheck}) => {
   const [done, setDone] = useState(false);
-
-  const handleCheckExercise = () => {
-    setDone(!done);
-    onCheck();
-  };
 
   return (
     <View style={styles.area}>
       <View style={styles.exercise}>
         <Text style={styles.index}>{index}. </Text>
-        {Muscles[data.muscle]}
-        <View style={styles.exerciseInfo}>
-          <Text style={styles.exerciseName}>{data.name}</Text>
-          <Text style={styles.exerciseDetails}>
-            {`${data.sets} ${translate('workout_detail_sets')} - ${
-              data.reps
-            } ${translate('workout_detail_reps')} ${
-              data.load
-                ? `- ${data.load} ${translate('workout_detail_weight')}`
-                : ``
-            }`}
-          </Text>
-        </View>
+        { Muscles[data.muscle] }
+        <Details data={data} />
       </View>
-      <CheckButton onPress={handleCheckExercise} selected={done} />
+      <CheckButton 
+        onPress={() => handleCheckExercise(done, setDone, onCheck)} 
+        selected={done} 
+      />
     </View>
   );
+}
+
+export default ExerciseItem;
+
+const Details = ({ data }) => (
+  <View style={styles.exerciseInfo}>
+    <Text style={styles.exerciseName}>
+      { data.name }
+    </Text>
+    <Text style={styles.exerciseDetails}>
+      {buildWorkoutDetails(data)}
+    </Text>
+  </View>
+);
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function buildWorkoutDetails(data) {
+  let details = `${data.sets} ${translate('workout_detail_sets')} - `;
+
+  details += `${data.reps} ${translate('workout_detail_reps')} `;
+
+  if (data.load) {
+    details += `- ${data.load} ${translate('workout_detail_weight')}`;
+  }
+
+  return details;
+}
+
+
+function handleCheckExercise(done, setDone, onCheck) {
+  setDone(!done);
+  onCheck();
 }
