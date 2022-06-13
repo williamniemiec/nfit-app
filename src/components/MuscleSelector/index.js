@@ -1,47 +1,13 @@
-import React, {useState} from 'react';
-import {
-  Image,
-  View,
-  SafeAreaView,
-  Text,
-  TextInput,
-  FlatList,
-  ScrollView,
-  TouchableHighlight,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Image, ScrollView, TouchableHighlight } from 'react-native';
 import styles from './styles';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function MuscleSelector({onSelect}) {
+const MuscleSelector = ({ onSelect }) => {
   const [selected, setSelected] = useState('abs');
-
-  const handleSelect = (muscle) => {
-    setSelected(muscle);
-    onSelect(muscle);
-  };
-
-  const Muscle = (props) => {
-    const OPACITY_SELECTED = 1;
-    const OPACITY_UNSELECTED = 0.3;
-
-    return (
-      <TouchableHighlight
-        style={[
-          styles.modalMuscle,
-          {
-            opacity:
-              selected == props.name ? OPACITY_SELECTED : OPACITY_UNSELECTED,
-          },
-        ]}
-        onPress={() => handleSelect(props.name)}
-        underlayColor="gray">
-        <Image style={styles.modalMuscleImage} source={props.img} />
-      </TouchableHighlight>
-    );
-  };
 
   return (
     <ScrollView
@@ -51,35 +17,89 @@ export default function MuscleSelector({onSelect}) {
       <Muscle
         name={'abs'}
         img={require('../../assets/images/muscles/abs.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
         name={'back'}
         img={require('../../assets/images/muscles/back.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
         name={'biceps'}
         img={require('../../assets/images/muscles/biceps.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
         name={'chest'}
         img={require('../../assets/images/muscles/chest.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
-        name={'gluteos'}
-        img={require('../../assets/images/muscles/gluteos.png')}
+        name={'gluteal'}
+        img={require('../../assets/images/muscles/gluteal.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
         name={'legs'}
         img={require('../../assets/images/muscles/legs.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
         name={'shoulders'}
         img={require('../../assets/images/muscles/shoulders.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
       <Muscle
         name={'triceps'}
         img={require('../../assets/images/muscles/triceps.png')}
+        selected={selected}
+        setSelected={setSelected}
+        onSelect={onSelect}
       />
     </ScrollView>
   );
+}
+
+export default MuscleSelector;
+
+const Muscle = ({ name, img, selected, setSelected, onSelect}) => {
+  const OPACITY_SELECTED = 1;
+  const OPACITY_UNSELECTED = 0.3;
+
+  return (
+    <TouchableHighlight
+      style={[
+        styles.modalMuscle,
+        {
+          opacity: (selected == name) ? OPACITY_SELECTED : OPACITY_UNSELECTED,
+        },
+      ]}
+      onPress={() => handleSelect(name, onSelect, setSelected)}
+      underlayColor="gray">
+      <Image style={styles.modalMuscleImage} source={img} />
+    </TouchableHighlight>
+  );
+};
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function handleSelect(muscle, onSelect, setSelected) {
+  setSelected(muscle);
+  onSelect(muscle);
 }

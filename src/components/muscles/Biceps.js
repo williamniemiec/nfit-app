@@ -6,13 +6,13 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function Biceps() {
-  return (
-    <View style={styles.area}>
-      <Image
-        style={styles.image}
-        source={require('../../assets/images/muscles/biceps.png')}
-      />
-    </View>
-  );
-}
+const Biceps = () => (
+  <View style={styles.area}>
+    <Image
+      style={styles.image}
+      source={require('../../assets/images/muscles/biceps.png')}
+    />
+  </View>
+);
+
+export default Biceps;

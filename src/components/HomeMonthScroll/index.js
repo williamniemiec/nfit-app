@@ -1,18 +1,18 @@
-import React, {useState, useEffect, useRef, useLayoutEffect} from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import {
   Dimensions,
   ScrollView,
-  View,
   Text,
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {translate} from './locales';
+import { translate } from './locales';
+
 
 //-----------------------------------------------------------------------------
-//        Components
+//        Constants
 //-----------------------------------------------------------------------------
-let months = [
+const months = [
   translate('january'),
   translate('february'),
   translate('march'),
@@ -26,11 +26,14 @@ let months = [
   translate('november'),
   translate('december'),
 ];
-
 const screenWidth = Math.round(Dimensions.get('window').width);
-let thirdWidth = screenWidth / 3; // 1/3 da largura da tela
+const thirdWidth = screenWidth / 3;
 
-export default ({
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
+const HomeMonthScroll = ({
   selectedMonth,
   setSelectedMonth,
   fgColor,
@@ -39,32 +42,9 @@ export default ({
 }) => {
   const monthRef = useRef();
 
-  const handleScrollEnd = (event) => {
-    let posX = event.nativeEvent.contentOffset.x;
-    const selectedIdx = Math.round(posX / thirdWidth);
-
-    setSelectedMonth(selectedIdx);
-  };
-
-  const scrollToMonth = (month) => {
-    let posX = month * thirdWidth;
-
-    monthRef.current.scrollTo({
-      x: posX,
-      y: 0,
-      animated: true,
-    });
-  };
-
   useLayoutEffect(() => {
-    setTimeout(() => {
-      scrollToMonth(selectedMonth);
-    }, 100);
+    setTimeout(() => scrollToMonth(selectedMonth, monthRef), 100);
   }, [selectedMonth]);
-
-  const handleSelectMonth = (index) => {
-    setSelectedMonth(index);
-  };
 
   return (
     <ScrollView
@@ -72,28 +52,77 @@ export default ({
       ref={monthRef}
       showsHorizontalScrollIndicator={false}
       decelerationRate="fast"
-      snapToInterval={thirdWidth} // Impede de parar no meio
+      snapToInterval={thirdWidth} // Avoids stopping on the middle of screen
       contentContainerStyle={{
         paddingLeft: thirdWidth,
         paddingRight: thirdWidth,
       }}
-      onMomentumScrollEnd={handleScrollEnd}
+      onMomentumScrollEnd={(event) => handleScrollEnd(event, setSelectedMonth)}
       style={styles.area}>
       {months.map((month, index) => (
-        <TouchableOpacity
-          onPress={() => handleSelectMonth(index)}
-          key={index}
-          style={[
-            styles.monthButton,
-            {
-              width: thirdWidth - 20,
-              backgroundColor:
-                selectedMonth == index ? bgColorActive : bgColorInactive,
-            },
-          ]}>
-          <Text style={[styles.monthLabel, {color: fgColor}]}>{month}</Text>
-        </TouchableOpacity>
+        <Month
+          index={{index}}
+          month={month}
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+          bgColorActive={bgColorActive}
+          bgColorInactive={bgColorInactive}
+          fgColor={fgColor}
+        />
       ))}
     </ScrollView>
   );
 };
+
+export default HomeMonthScroll;
+
+const Month = ({ 
+  index, 
+  month,
+  selectedMonth, 
+  setSelectedMonth, 
+  bgColorActive, 
+  bgColorInactive,
+  fgColor
+}) => (
+  <TouchableOpacity
+    onPress={() => handleSelectMonth(index, setSelectedMonth)}
+    key={index}
+    style={[
+      styles.monthButton,
+      {
+        width: thirdWidth - 20,
+        backgroundColor:
+          selectedMonth == index ? bgColorActive : bgColorInactive,
+      },
+    ]}>
+    <Text style={[styles.monthLabel, { color: fgColor }]}>
+      { month }
+    </Text>
+  </TouchableOpacity>
+);
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function handleScrollEnd(event, setSelectedMonth) {
+  const horizontalPosition = event.nativeEvent.contentOffset.x;
+  const selectedIndex = Math.round(horizontalPosition / thirdWidth);
+
+  setSelectedMonth(selectedIndex);
+}
+
+function scrollToMonth(month, monthRef) {
+  const horizontalPosition = month * thirdWidth;
+
+  monthRef.current.scrollTo({
+    x: horizontalPosition,
+    y: 0,
+    animated: true,
+  });
+}
+
+function handleSelectMonth(index, setSelectedMonth) {
+  setSelectedMonth(index);
+}

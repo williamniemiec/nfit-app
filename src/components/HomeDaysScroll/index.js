@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useLayoutEffect} from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import {
   StyleSheet,
   Dimensions,
@@ -6,7 +6,6 @@ import {
   View,
   Text,
   TouchableHighlight,
-  TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
 

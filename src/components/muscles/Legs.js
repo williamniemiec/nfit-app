@@ -6,13 +6,13 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function Legs() {
-  return (
-    <View style={styles.area}>
-      <Image
-        style={styles.image}
-        source={require('../../assets/images/muscles/legs.png')}
-      />
-    </View>
-  );
-}
+const Legs = () => (
+  <View style={styles.area}>
+    <Image
+      style={styles.image}
+      source={require('../../assets/images/muscles/legs.png')}
+    />
+  </View>
+);
+
+export default Legs;

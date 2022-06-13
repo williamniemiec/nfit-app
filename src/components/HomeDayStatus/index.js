@@ -1,127 +1,188 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import styles from './styles';
 import ActionButton from '../button/ActionButton';
 import RemainingTime from '../RemainingTime';
-import {translate} from '../../locales';
+import { translate } from '../../locales';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default ({
+const HomeDayStatus = ({
   selectedMonth,
   selectedDay,
-  setSelectedDay,
   dailyProgress,
   workoutDays,
   addProgress,
   deleteProgress,
   goToWorkout,
 }) => {
-  const today = new Date();
-  // Zera as horas para realizar futuras comparações
-  today.setHours(0);
-  today.setMinutes(0);
-  today.setSeconds(0);
-  today.setMilliseconds(0);
-
-  const thisDate = new Date(
-    today.getFullYear(),
-    selectedMonth,
-    selectedDay,
-    0,
-    0,
-    0,
-    0,
-  );
-  let thisYear = thisDate.getFullYear();
-  let thisMonth = thisDate.getMonth() + 1;
-  let thisDay = thisDate.getDate();
-
-  // força 0 a esquerda
-  if (thisMonth < 10) thisMonth = '0' + thisMonth;
-
-  if (thisDay < 10) thisDay = '0' + thisDay;
-
-  let dayFormated = `${thisYear}-${thisMonth}-${thisDay}`;
-
-  // Flags
+  const today = getBeginTimeOfToday();
+  const thisDate = getBeginTimeOf(today.getFullYear(), selectedMonth, selectedDay);
+  const dayFormatted = formatDate(thisDate);
+  const isToday = (thisDate.getTime() == today.getTime());
   let dayOff = false;
-  let isToday = false;
   let isFuture = false;
   let isDone = false;
 
   if (!workoutDays.includes(thisDate.getDay())) {
     dayOff = true;
-  } else if (thisDate.getTime() > today.getTime()) {
+  } 
+  else if (thisDate.getTime() > today.getTime()) {
     isFuture = true;
-  } else {
-    if (dailyProgress.includes(dayFormated)) isDone = true;
-    else isDone = false;
+  } 
+  else if (dailyProgress.includes(dayFormatted)) {
+    isDone = true;
   }
-  if (thisDate.getTime() == today.getTime()) isToday = true;
-
-  const handleUndoneWorkout = () => {
-    deleteProgress(dayFormated);
-  };
-
-  const handleDoneWorkout = () => {
-    addProgress(dayFormated);
-  };
 
   return (
     <View style={styles.area}>
       <View style={styles.ballonTriangle}></View>
       <View style={styles.ballonArea}>
-        {dayOff && (
-          <Text style={styles.ballonBigText}>
-            {translate('daily_workout_rest')}
-          </Text>
-        )}
-        {isFuture && (
-          <Text style={styles.ballonBigText}>
-            {translate('daily_workout_future')}
-          </Text>
-        )}
-        {!dayOff && !isFuture && isDone && (
-          <>
-            <Text style={styles.ballonBigText}>
-              {translate('daily_workout_done_message')}
-            </Text>
-            <ActionButton
-              title={translate('unselect').toUpperCase()}
-              onPress={() => deleteProgress(dayFormated)}
-            />
-          </>
-        )}
-        {!dayOff && !isFuture && !isDone && !isToday && (
-          <>
-            <Text style={styles.ballonBigText}>
-              {translate('daily_workout_lost_message')}
-            </Text>
-            <ActionButton
-              title={translate('mark_as_done').toUpperCase()}
-              onPress={() => addProgress(dayFormated)}
-            />
-          </>
-        )}
-        {!dayOff && !isFuture && !isDone && isToday && (
-          <>
-            <Text style={styles.ballonBigText}>
-              {translate('daily_workout_today_message')}
-            </Text>
-            <Text>
-              {translate('remaining_time_message_pt1')} <RemainingTime />{' '}
-              {translate('remaining_time_message_pt2')}
-            </Text>
-            <ActionButton
-              title={translate('start_workout').toUpperCase()}
-              onPress={goToWorkout}
-            />
-          </>
-        )}
+        <DayOff display={dayOff} />
+        <FutureDay display={isFuture} />
+        <DoneMessage 
+          display={!dayOff && !isFuture && isDone} 
+          formattedDate={dayFormatted}
+          deleteProgress={deleteProgress}
+          addProgress={addProgress}
+        />
+        <LostMessage 
+          display={!dayOff && !isFuture && !isDone && !isToday} 
+          goToWorkout={goToWorkout} 
+        />
+        <TodayMessage 
+          display={!dayOff && !isFuture && !isDone && isToday} 
+          goToWorkout={goToWorkout} 
+        />
       </View>
     </View>
   );
 };
+
+export default HomeDayStatus;
+
+const DayOff = (display) => {
+  if (!display) {
+    return <></>;
+  }
+
+  return (
+    <Text style={styles.ballonBigText}>
+      { translate('daily_workout_rest') }
+    </Text>
+  );
+}
+
+const FutureDay = (display) => {
+  if (!display) {
+    return <></>;
+  }
+
+  return (
+    <Text style={styles.ballonBigText}>
+      { translate('daily_workout_future') }
+    </Text>
+  );
+}
+
+const DoneMessage = (display, formattedDate, deleteProgress) => {
+  if (!display) {
+    return <></>;
+  }
+
+  return (
+    <>
+      <Text style={styles.ballonBigText}>
+        { translate('daily_workout_done_message') }
+      </Text>
+      <ActionButton
+        title={translate('unselect').toUpperCase()}
+        onPress={() => deleteProgress(formattedDate)}
+      />
+    </>
+  );
+}
+
+const LostMessage = (display, formattedDate, addProgress) => {
+  if (!display) {
+    return <></>;
+  }
+
+  return (
+    <>
+      <Text style={styles.ballonBigText}>
+        { translate('daily_workout_lost_message') }
+      </Text>
+      <ActionButton
+        title={translate('mark_as_done').toUpperCase()}
+        onPress={() => addProgress(formattedDate)}
+      />
+    </>
+  );
+}
+
+const TodayMessage = (display, goToWorkout) => {
+  if (!display) {
+    return <></>;
+  }
+
+  return (
+    <>
+      <Text style={styles.ballonBigText}>
+        { translate('daily_workout_today_message')}
+      </Text>
+      <Text>
+        { translate('remaining_time_message_pt1') } <RemainingTime />{' '}
+        { translate('remaining_time_message_pt2') }
+      </Text>
+      <ActionButton
+        title={translate('start_workout').toUpperCase()}
+        onPress={goToWorkout}
+      />
+    </>
+  );
+}
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function getBeginTimeOfToday() {
+  const today = new Date();
+
+  today.setHours(0);
+  today.setMinutes(0);
+  today.setSeconds(0);
+  today.setMilliseconds(0);
+
+  return today;
+}
+
+function getBeginTimeOf(year, month, day) {
+  return new Date(
+    year,
+    month,
+    day,
+    0,
+    0,
+    0,
+    0,
+  );
+}
+
+function formatDate(date) {
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+
+  if (month < 10) {
+    month = '0' + month;
+  }
+
+  if (day < 10) {
+    day = '0' + day;
+  }
+
+  return `${date.getFullYear()}-${month}-${day}`;
+}

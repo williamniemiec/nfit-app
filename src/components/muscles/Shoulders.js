@@ -6,13 +6,13 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function Shoulders() {
-  return (
-    <View style={styles.area}>
-      <Image
-        style={styles.image}
-        source={require('../../assets/images/muscles/shoulders.png')}
-      />
-    </View>
-  );
-}
+const Shoulders = () => (
+  <View style={styles.area}>
+    <Image
+      style={styles.image}
+      source={require('../../assets/images/muscles/shoulders.png')}
+    />
+  </View>
+);
+
+export default Shoulders;
