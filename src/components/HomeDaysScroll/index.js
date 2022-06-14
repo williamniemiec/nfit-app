@@ -9,7 +9,7 @@ import Day from './Day';
 //-----------------------------------------------------------------------------
 const screenWidth = Math.round(Dimensions.get('window').width);
 const dayWidth = Math.round(screenWidth / 9);
-const offsetWidth = Math.round((screenWidth - dayWidth) / 2);
+const offsetWidth = Math.round((screenWidth - dayWidth) / 2) - 10;
 
 
 //-----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ function getCurrentMonth() {
 
 function handleScrollEnd(event, setSelectedDay) {
   const horizontalPosition = event.nativeEvent.contentOffset.x;
-  const selectedIndex = Math.round(horizontalPosition / dayWidth + 1);
+  const selectedIndex = Math.round(horizontalPosition / dayWidth);
 
   setSelectedDay(selectedIndex);
 }
