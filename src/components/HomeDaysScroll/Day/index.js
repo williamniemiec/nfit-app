@@ -49,7 +49,7 @@ const Day = ({
     <TouchableHighlight
       onPress={onPress}
       underlayColor="transparent"
-      style={[styles.dayButton, { width: dayWidth }]}>
+      style={[{ width: dayWidth }]}>
       <View style={[
         styles.dayItem, 
         buildColorStyle(colorMapping, month, day, workoutDays, dailyProgress)

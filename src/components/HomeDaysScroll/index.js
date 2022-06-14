@@ -1,7 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
-import Day from './day';
+import Day from './Day';
 
 
 //-----------------------------------------------------------------------------
