@@ -1,36 +1,47 @@
 import React from 'react';
-import {Text, View, KeyboardAvoidingView, Modal} from 'react-native';
-import {TouchableHighlight} from 'react-native';
+import { 
+  Text, 
+  View, 
+  KeyboardAvoidingView, 
+  Modal,
+  TouchableHighlight
+} from 'react-native';
 import styles from './styles';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function CustomModal(props) {
-  const ModalClose = () => {
-    return (
-      <TouchableHighlight
-        style={styles.modalClose}
-        onPress={props.onClose}
-        underlayColor="transparent">
-        <Text style={styles.closeText}>X</Text>
-      </TouchableHighlight>
-    );
-  };
-
-  return (
-    <Modal
-      style={styles.body}
-      visible={props.visible}
-      transparent={true}
-      animationType="fade">
-      <KeyboardAvoidingView style={styles.modalBoxArea}>
-        <View style={[styles.modalBox, props.style]}>
-          <ModalClose />
-          <View style={styles.modalBody}>{props.children}</View>
+const CustomModal = (props) => (
+  <Modal
+    style={styles.body}
+    visible={props.visible}
+    transparent={true}
+    animationType="fade"
+  >
+    <KeyboardAvoidingView style={styles.modalBoxArea}>
+      <View style={[styles.modalBox, props.style]}>
+        <ModalClose onClose={props.onClose} />
+        <View>
+          { props.children }
         </View>
-      </KeyboardAvoidingView>
-    </Modal>
+      </View>
+    </KeyboardAvoidingView>
+  </Modal>
+);
+
+export default CustomModal;
+
+const ModalClose = ({ onClose }) => {
+  return (
+    <TouchableHighlight
+      style={styles.modalClose}
+      onPress={onClose}
+      underlayColor="transparent"
+    >
+      <Text style={styles.closeText}>
+        X
+      </Text>
+    </TouchableHighlight>
   );
-}
+};

@@ -1,12 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function AddButton({onPress, selected}) {
+const AddButton = ({onPress, selected}) => {
   const icon = selected
     ? require('../../../../assets/images/check-white.png')
     : require('../../../../assets/images/add-white.png');
@@ -17,3 +17,5 @@ export default function AddButton({onPress, selected}) {
     </TouchableOpacity>
   );
 }
+
+export default AddButton;

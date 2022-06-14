@@ -35,7 +35,7 @@ const Details = ({ data }) => (
       { data.name }
     </Text>
     <Text style={styles.exerciseDetails}>
-      {buildWorkoutDetails(data)}
+      { buildWorkoutDetails(data) }
     </Text>
   </View>
 );
@@ -55,7 +55,6 @@ function buildWorkoutDetails(data) {
 
   return details;
 }
-
 
 function handleCheckExercise(done, setDone, onCheck) {
   setDone(!done);

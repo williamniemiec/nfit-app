@@ -1,13 +1,13 @@
 import React from 'react';
-import {TouchableHighlight, View} from 'react-native';
+import { TouchableHighlight } from 'react-native';
 import styles from './styles';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function OrkutButton({onPress, selected, color}) {
-  const colorTheme = color === undefined ? '#ed238e' : color;
+const OrkutButton = ({onPress, selected, color}) => {
+  const colorTheme = (color === undefined) ? '#ed238e' : color;
 
   return (
     <TouchableHighlight
@@ -24,3 +24,5 @@ export default function OrkutButton({onPress, selected, color}) {
     </TouchableHighlight>
   );
 }
+
+export default OrkutButton;

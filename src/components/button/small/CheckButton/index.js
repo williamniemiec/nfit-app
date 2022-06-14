@@ -1,12 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function CheckButton({onPress, selected}) {
+const CheckButton = ({ onPress, selected }) => {
   const icon = selected
     ? require('../../../../assets/images/check-white.png')
     : require('../../../../assets/images/uncheck-white.png');
@@ -17,3 +17,5 @@ export default function CheckButton({onPress, selected}) {
     </TouchableOpacity>
   );
 }
+
+export default CheckButton;

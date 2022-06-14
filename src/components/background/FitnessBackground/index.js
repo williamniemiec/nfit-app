@@ -6,17 +6,16 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function FitnessBackground({ children }) {
-  
-  return (
-    <ImageBackground 
-      style={styles.background} 
-      source={require("../../../assets/images/fitness.jpg")} 
-      resizeMode="cover" 
-      blurRadius={1}
-    >
-      <StatusBar barStyle='light-content' backgroundColor='#000' />
-      {children}
-    </ImageBackground>
-  );
-}
+const FitnessBackground = ({ children }) => (
+  <ImageBackground 
+    style={styles.background} 
+    source={require("../../../assets/images/fitness.jpg")} 
+    resizeMode="cover" 
+    blurRadius={1}
+  >
+    <StatusBar barStyle='light-content' backgroundColor='#000' />
+    { children }
+  </ImageBackground>
+);
+
+export default FitnessBackground;

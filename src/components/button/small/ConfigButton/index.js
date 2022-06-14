@@ -1,12 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export default function ConfigButton({onPress}) {
+const ConfigButton = ({ onPress }) => {
   return (
     <TouchableOpacity style={styles.btn} onPress={onPress}>
       <Image
@@ -16,3 +16,5 @@ export default function ConfigButton({onPress}) {
     </TouchableOpacity>
   );
 }
+
+export default ConfigButton;
