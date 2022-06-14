@@ -49,15 +49,23 @@ const TabBarButton = ({ options, index, navigation, route, isFocused }) => {
       style={styles.btn}
     >
       <View style={styles.btnContent}>
-        {options.icon != undefined ? (
-          <Image style={styles.btnRegular} source={options.icon} />
-        ) : null}
+        <TabBarButtonIcon options={options} />
         <Text style={[styles.label, isFocused ? styles.focused : null]}>
-          { route.name }
+          { options.title ? options.title : route.name }
         </Text>
       </View>
     </TouchableOpacity>
   );
+};
+
+const TabBarButtonIcon = ({ options }) => {
+  if (options.icon === undefined) {
+    return null;
+  }
+
+  return (
+    <Image style={styles.btnRegular} source={options.icon} />
+  );  
 };
 
 

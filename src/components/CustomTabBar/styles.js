@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { borderColor } from 'styled-system';
 import colors from '../../assets/colors';
 
 
@@ -22,6 +23,8 @@ export default StyleSheet.create({
     borderRadius: 45,
     marginTop: -45,
     backgroundColor: colors.accent,
+    borderWidth: 5,
+    borderColor:'white'
   },
   icon: {
     width: 60,

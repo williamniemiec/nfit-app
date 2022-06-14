@@ -11,7 +11,7 @@ const BarbellBackground = ({ children }) => (
     style={styles.background} 
     source={require("../../../assets/images/barbell.jpg")} 
     resizeMode="cover" 
-    blurRadius={1}
+    blurRadius={2}
   >
     <StatusBar barStyle='light-content' backgroundColor='#000' />
     { children }

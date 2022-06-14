@@ -36,6 +36,7 @@ const MyTrainingScreen = () => {
       <ScrollView style={[globalStyles.container, styles.body]}>
         {user.myWorkouts.map((workout, index) => (
           <Training 
+            key={index}
             index={index}
             workout={workout} 
             navigation={navigation} 
