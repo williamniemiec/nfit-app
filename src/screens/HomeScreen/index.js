@@ -97,7 +97,7 @@ const DaySelector = ({
         setSelectedDay={setSelectedDay}
         dailyProgress={user.dailyProgress}
         workoutDays={user.workoutDays}
-        addProgress={(date) =>
+        addProgress={(date) => 
           dispatch({type: 'ADD_DAILY_PROGRESS', payload: { date }})
         }
         deleteProgress={(date) =>

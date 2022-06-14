@@ -10,7 +10,7 @@ const initialState = {
 export default (state=initialState, action) => {
     let newMyWorkouts = state.myWorkouts
     let newWorkoutDays = state.workoutDays
-    let dailyProgress = []
+    let dailyProgress = state.dailyProgress
     let index = -1
 
     switch (action.type) {
@@ -55,7 +55,6 @@ export default (state=initialState, action) => {
             return {...state, myWorkouts: newMyWorkouts}
         case 'ADD_DAILY_PROGRESS':
             if (!dailyProgress.includes(action.payload.date)) {
-                dailyProgress = state.dailyProgress
                 dailyProgress.push(action.payload.date)
 
                 return {...state, dailyProgress: dailyProgress}

@@ -46,11 +46,11 @@ const HomeDayStatus = ({
           display={!dayOff && !isFuture && isDone} 
           formattedDate={dayFormatted}
           deleteProgress={deleteProgress}
-          addProgress={addProgress}
         />
         <LostMessage 
           display={!dayOff && !isFuture && !isDone && !isToday} 
-          goToWorkout={goToWorkout} 
+          formattedDate={dayFormatted}
+          addProgress={addProgress}
         />
         <TodayMessage 
           display={!dayOff && !isFuture && !isDone && isToday} 

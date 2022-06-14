@@ -101,7 +101,7 @@ function handleScrollEnd(event, setSelectedDay) {
   const horizontalPosition = event.nativeEvent.contentOffset.x;
   const selectedIndex = Math.round(horizontalPosition / dayWidth);
 
-  setSelectedDay(selectedIndex);
+  setSelectedDay(selectedIndex + 1);
 }
 
 function scrollToDay(day, dayRef) {
