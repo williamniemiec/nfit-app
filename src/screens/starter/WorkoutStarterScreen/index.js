@@ -133,8 +133,6 @@ function handleGoNext(props, workouts, dispatch) {
     type: 'SET_MY_WORKOUTS',
     payload: { workouts },
   });
-
-  RNRestart.Restart();
 }
 
 function isNameSet(props) {

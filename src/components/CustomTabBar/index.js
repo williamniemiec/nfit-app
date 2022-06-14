@@ -6,7 +6,7 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const CustomTabBar = ({state, descriptors, navigation}) => {
+const CustomTabBar = ({ state, descriptors, navigation }) => {
   if (shouldHideTabBar(state, descriptors)) {
     return (<></>);
   }
@@ -35,7 +35,8 @@ const TabBarButton = ({ options, index, navigation, route, isFocused }) => {
       <TouchableOpacity
         key={index}
         onPress={() => handleRedirect(navigation, route)}
-        style={styles.home}>
+        style={styles.home}
+      >
         <Image style={styles.icon} source={options.icon} />
       </TouchableOpacity>
     );
@@ -45,7 +46,8 @@ const TabBarButton = ({ options, index, navigation, route, isFocused }) => {
     <TouchableOpacity
       key={index}
       onPress={() => handleRedirect(navigation, route)}
-      style={styles.btn}>
+      style={styles.btn}
+    >
       <View style={styles.btnContent}>
         {options.icon != undefined ? (
           <Image style={styles.btnRegular} source={options.icon} />

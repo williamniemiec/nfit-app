@@ -63,7 +63,7 @@ const HomeDayStatus = ({
 
 export default HomeDayStatus;
 
-const DayOff = (display) => {
+const DayOff = ({ display }) => {
   if (!display) {
     return <></>;
   }
@@ -75,7 +75,7 @@ const DayOff = (display) => {
   );
 }
 
-const FutureDay = (display) => {
+const FutureDay = ({ display }) => {
   if (!display) {
     return <></>;
   }
@@ -87,7 +87,7 @@ const FutureDay = (display) => {
   );
 }
 
-const DoneMessage = (display, formattedDate, deleteProgress) => {
+const DoneMessage = ({ display, formattedDate, deleteProgress }) => {
   if (!display) {
     return <></>;
   }
@@ -105,7 +105,7 @@ const DoneMessage = (display, formattedDate, deleteProgress) => {
   );
 }
 
-const LostMessage = (display, formattedDate, addProgress) => {
+const LostMessage = ({ display, formattedDate, addProgress }) => {
   if (!display) {
     return <></>;
   }
@@ -123,7 +123,7 @@ const LostMessage = (display, formattedDate, addProgress) => {
   );
 }
 
-const TodayMessage = (display, goToWorkout) => {
+const TodayMessage = ({ display, goToWorkout }) => {
   if (!display) {
     return <></>;
   }
