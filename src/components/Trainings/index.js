@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import styles from './styles';
 import TrainingSet from '../TrainingSet';
-import muscleMapping from '../muscles';
+import { muscleMapping } from '../muscles';
 import AddButton from '../button/small/AddButton';
 
 
@@ -68,6 +68,7 @@ function generateListOfReactElements(elements) {
   
   elements.map((item, key) => {
     const component = React.createElement(item.type, {key: key});
+
     rendered.push(component);
   });
 

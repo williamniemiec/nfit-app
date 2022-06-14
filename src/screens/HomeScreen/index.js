@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import { translate } from '../../locales';

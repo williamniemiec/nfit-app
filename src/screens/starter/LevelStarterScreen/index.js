@@ -31,7 +31,7 @@ const LevelStarterScreen = (props) => {
     <TheManBackground>
       <SafeAreaView style={[globalStyles.container, globalStyles.panel]}>
         <View style={[styles.area]}>
-          <Header totalDays={totalDays} />
+          <Header totalDays={props.route.params.workoutDays.length} />
           <WorkoutLevel 
             onPress={(name) => handleLevel(name, setLevel, levelRef)} 
             funny={true} 

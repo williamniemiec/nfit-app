@@ -57,17 +57,11 @@ const Header = ({ name }) => (
   </View>
 );
 
-const SelectedScheduleMessage = ({ name }) => {
-  const message = translate('welcome_message_pt1')
-    + ` ${<HighlightedText text={name} />} `
-    + translate('welcome_message_pt2');
-
-  return (
-    <Text style={globalStyles.message}>
-      { message }
-    </Text>
-  );
-}
+const SelectedScheduleMessage = ({ name }) => (
+  <Text style={globalStyles.message}>
+    { translate('welcome_message_pt1') } <HighlightedText text={name} /> { translate('welcome_message_pt2') }
+  </Text>
+);
 
 const HighlightedText = ({ text }) => (
   <Text style={globalStyles.highlight}>

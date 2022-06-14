@@ -61,6 +61,7 @@ const HomeMonthScroll = ({
       style={styles.area}>
       {months.map((month, index) => (
         <Month
+          key={index}
           index={{index}}
           month={month}
           selectedMonth={selectedMonth}

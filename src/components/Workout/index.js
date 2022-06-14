@@ -1,6 +1,6 @@
 import React from 'react';
 import TrainingSet from '../TrainingSet';
-import muscleMapping from '../muscles';
+import { muscleMapping } from '../muscles';
 
 
 //-----------------------------------------------------------------------------

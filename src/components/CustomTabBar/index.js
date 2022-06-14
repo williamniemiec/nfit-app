@@ -15,11 +15,12 @@ const CustomTabBar = ({state, descriptors, navigation}) => {
     <View style={styles.area}>
       {state.routes.map((route, index) => (
         <TabBarButton 
-          options={options}
+          key={index}
+          options={descriptors[route.key].options}
           index={index}
           navigation={navigation}
           route={route}
-          isFocused={isFocused}
+          isFocused={state.index === index}
         />
       ))}
     </View>

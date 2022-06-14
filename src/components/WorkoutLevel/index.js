@@ -12,6 +12,18 @@ const WorkoutLevel = ({ onPress, funny, selected, full }) => {
   const [selectedOp, setSelectedOp] = useState(-1);
   const titles = buildTitles(funny);
 
+  const OptionButton = ({ option, selectedOp, setSelectedOp, titles, onPress, full }) => (
+    <SelectableButton 
+      selected={selectedOp == option} 
+      title={titles[option-1]} 
+      onPress={() => handlePress(option, onPress, setSelectedOp)} 
+      fgColor='white' 
+      bgColor='#e5810c' 
+      size='small'
+      full={full}
+    />
+  );
+
   useEffect(() => {
     if (selected != undefined) {
       setSelectedOp(selected);
@@ -49,18 +61,6 @@ const WorkoutLevel = ({ onPress, funny, selected, full }) => {
 }
 
 export default WorkoutLevel;
-
-const OptionButton = ({ option, selectedOp, setSelectedOp, titles, onPress, full }) => (
-  <SelectableButton 
-    selected={selectedOp == option} 
-    title={titles[option-1]} 
-    onPress={() => handlePress(option, onPress, setSelectedOp)} 
-    fgColor='white' 
-    bgColor='#e5810c' 
-    size='small'
-    full={full}
-  />
-);
 
 
 //-----------------------------------------------------------------------------
