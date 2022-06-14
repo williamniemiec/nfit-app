@@ -78,7 +78,7 @@ export default HomeDaysScroll;
 function getLastMonth(selectedMonth) {
   return new Date(
     new Date().getFullYear(),
-    selectedMonth + 1,
+    selectedMonth - 1,
     0,
   ).getDate(); 
 }

@@ -64,11 +64,9 @@ const HomeMonthScroll = ({
           key={index}
           index={{index}}
           month={month}
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-          bgColorActive={bgColorActive}
-          bgColorInactive={bgColorInactive}
           fgColor={fgColor}
+          bgColor={(selectedMonth == index) ? bgColorActive : bgColorInactive}
+          onPress={() => handleSelectMonth(index, setSelectedMonth)}
         />
       ))}
     </ScrollView>
@@ -80,23 +78,21 @@ export default HomeMonthScroll;
 const Month = ({ 
   index, 
   month,
-  selectedMonth, 
-  setSelectedMonth, 
-  bgColorActive, 
-  bgColorInactive,
-  fgColor
+  fgColor,
+  onPress,
+  bgColor
 }) => (
   <TouchableOpacity
-    onPress={() => handleSelectMonth(index, setSelectedMonth)}
+    onPress={onPress}
     key={index}
     style={[
       styles.monthButton,
       {
         width: thirdWidth - 20,
-        backgroundColor:
-          selectedMonth == index ? bgColorActive : bgColorInactive,
-      },
-    ]}>
+        backgroundColor: bgColor,
+      }
+    ]}
+  >
     <Text style={[styles.monthLabel, { color: fgColor }]}>
       { month }
     </Text>
