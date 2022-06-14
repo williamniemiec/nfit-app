@@ -9,13 +9,15 @@ import { translate } from '../../locales';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const ExerciseItem = ({data, index, onCheck}) => {
+const ExerciseItem = ({ data, index, onCheck }) => {
   const [done, setDone] = useState(false);
 
   return (
     <View style={styles.area}>
       <View style={styles.exercise}>
-        <Text style={styles.index}>{index}. </Text>
+        <Text style={styles.index}>
+          {index}. 
+        </Text>
         { Muscles[data.muscle] }
         <Details data={data} />
       </View>
@@ -32,7 +34,7 @@ export default ExerciseItem;
 const Details = ({ data }) => (
   <View style={styles.exerciseInfo}>
     <Text style={styles.exerciseName}>
-      { data.name }
+      { translate(data.name) }
     </Text>
     <Text style={styles.exerciseDetails}>
       { buildWorkoutDetails(data) }

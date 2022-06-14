@@ -37,6 +37,10 @@ function setLanguageToI18n() {
 setLanguageToI18n();
 
 export function translate(key) {
+  if (I18n.t(key).includes("[missing")) {
+    return key;
+  }
+
   return I18n.t(key);
 }
 

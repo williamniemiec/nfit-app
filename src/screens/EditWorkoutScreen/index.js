@@ -21,14 +21,14 @@ import { buildHeaderTabAccent } from '../../components/HeaderTab';
 //-----------------------------------------------------------------------------
 const EditWorkoutScreen = (props) => {
   const isNew = (props.route.params === undefined);
-  const id = isNew ? uuid() : workout.id;
   const workout = isNew ? [] : props.route.params.workout;
+  const id = isNew ? uuid() : workout.id;
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [name, setName] = useState(isNew ? '' : workout.name);
   const [exercises, setExercises] = useState(getWorkoutExercises(isNew, workout));
   const [editExercise, setEditExercise] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions(

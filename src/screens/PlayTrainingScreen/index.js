@@ -38,8 +38,9 @@ const PlayTrainingScreen = (props) => {
           <WorkoutList 
             exercises={workout.exercises} 
             exercisesDone={exercisesDone} 
+            workout={workout}
             dispatch={dispatch} 
-            navigation={navigation} 
+            navigation={navigation}
           />
         </View>
       </SafeAreaView>
@@ -56,7 +57,13 @@ const Header = ({ navigation, workout }) => (
   </View>
 );
 
-const WorkoutList = ({ exercises, exercisesDone, dispatch, navigation }) => (
+const WorkoutList = ({ 
+  exercises, 
+  exercisesDone, 
+  workout, 
+  dispatch, 
+  navigation 
+}) => (
   <FlatList
     style={styles.workoutList}
     data={exercises}
@@ -68,9 +75,10 @@ const WorkoutList = ({ exercises, exercisesDone, dispatch, navigation }) => (
           item, 
           exercisesDone, 
           exercises, 
+          workout,
           dispatch, 
-          navigation)
-        }
+          navigation
+        )}
       />
     )}
     keyExtractor={(item) => item.id.toString()}
@@ -81,7 +89,14 @@ const WorkoutList = ({ exercises, exercisesDone, dispatch, navigation }) => (
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function handleOnCheck(exercise, exercisesDone, exercises, dispatch, navigation) {
+function handleOnCheck(
+  exercise, 
+  exercisesDone, 
+  exercises, 
+  workout, 
+  dispatch, 
+  navigation
+) {
   if (exercisesDone.has(exercise.id)) {
     exercisesDone.delete(exercise.id);
   } 
@@ -94,11 +109,11 @@ function handleOnCheck(exercise, exercisesDone, exercises, dispatch, navigation)
 
     dispatch({
       type: 'ADD_DAILY_PROGRESS',
-      payload: {date: getCurrentDate()},
+      payload: { date: getCurrentDate() },
     });
     dispatch({
       type: 'SET_LAST_WORKOUT',
-      payload: {workout: workout.id},
+      payload: { workout: workout.id },
     });
 
     navigation.dispatch(
