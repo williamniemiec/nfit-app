@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     container:{
         flex:1,
-        margin:20
+        margin:20,
     },
     center:{
         justifyContent:'space-around',

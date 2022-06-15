@@ -9,5 +9,6 @@ export default {
   textSecondary: "#ffffff",
   accent: "#E5810C",
   accentRgb: '229,129,12',
-  dark: '#333333'
+  dark: '#333333',
+  light: '#f2f2f2'
 }

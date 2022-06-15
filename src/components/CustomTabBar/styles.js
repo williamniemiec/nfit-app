@@ -26,7 +26,7 @@ export default StyleSheet.create({
     marginTop: -45,
     backgroundColor: colors.dark,
     borderWidth: 5,
-    borderColor:'white'
+    borderColor: colors.light
   },
   icon: {
     width: 60,

@@ -148,7 +148,7 @@ function handleSave(navigation, dispatch, isNew, id, name, exercises) {
     alert(translate('workout_name_required'));
     return;
   }
-  console.log(exercises)
+  
   if (isNew) {
     dispatch({
       type: 'ADD_MY_WORKOUTS',

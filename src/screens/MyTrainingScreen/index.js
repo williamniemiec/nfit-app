@@ -10,7 +10,7 @@ import EditButton from '../../components/button/small/EditButton';
 import TrashButton from '../../components/button/small/TrashButton';
 import Workout from '../../components/Workout';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
-import BarbellBackground from '../../components/background/BarbellBackground';
+import LightBackground from '../../components/background/LightBackground';
 
 
 //-----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ const MyTrainingScreen = () => {
   }, []);
 
   return (
-    <BarbellBackground>
+    <LightBackground>
       <ScrollView style={[globalStyles.container, styles.body]}>
         {user.myWorkouts.map((workout, index) => (
           <Training 
@@ -44,7 +44,7 @@ const MyTrainingScreen = () => {
           />
         ))}
       </ScrollView>
-    </BarbellBackground>
+    </LightBackground>
   );
 }
 

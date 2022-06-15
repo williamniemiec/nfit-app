@@ -11,7 +11,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: `rgba(${colors.accentRgb},0.6)`,
+    backgroundColor: `rgba(${colors.accentRgb},1.0)`,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.accent,

@@ -11,6 +11,7 @@ import HomeMonthScroll from '../../components/HomeMonthScroll';
 import HomeDaysScroll from '../../components/HomeDaysScroll';
 import HomeDayStatus from '../../components/HomeDayStatus';
 import { buildHeaderTransparent } from '../../components/HeaderTab';
+import LightBackground from '../../components/background/LightBackground';
 
 
 //-----------------------------------------------------------------------------
@@ -35,20 +36,22 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={globalStyles.container}>
-      <MonthSelector
-        selectedMonth={selectedMonth}
-        setSelectedMonth={setSelectedMonth}
-      />
-      <DaySelector
-        selectedMonth={selectedMonth}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        user={user}
-        navigation={navigation}
-        dispatch={dispatch}
-      />
-    </SafeAreaView>
+    <LightBackground>
+      <SafeAreaView style={globalStyles.container}>
+        <MonthSelector
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+        />
+        <DaySelector
+          selectedMonth={selectedMonth}
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
+          user={user}
+          navigation={navigation}
+          dispatch={dispatch}
+        />
+      </SafeAreaView>
+    </LightBackground>
   );
 }
 
