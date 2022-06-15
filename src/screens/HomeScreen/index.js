@@ -10,7 +10,7 @@ import ConfigButton from '../../components/button/small/ConfigButton';
 import HomeMonthScroll from '../../components/HomeMonthScroll';
 import HomeDaysScroll from '../../components/HomeDaysScroll';
 import HomeDayStatus from '../../components/HomeDayStatus';
-import { buildHeaderTabAccent } from '../../components/HeaderTab';
+import { buildHeaderTransparent } from '../../components/HeaderTab';
 
 
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ const HomeScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions(
-      buildHeaderTabAccent(
+      buildHeaderTransparent(
         null,
         <ConfigButton onPress={() => handleConfig(navigation)} />,
         translate('daily_progress'),

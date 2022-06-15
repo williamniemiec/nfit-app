@@ -6,11 +6,11 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const ActionButton = ({ title, onPress, bgColor }) => {
+const ActionButton = ({ title, onPress, bgColor, style }) => {
   const bgStyle = (bgColor === undefined) ? null : { backgroundColor: bgColor };
 
   return (
-    <TouchableOpacity style={[styles.btn, bgStyle]} onPress={onPress}>
+    <TouchableOpacity style={[styles.btn, bgStyle, style]} onPress={onPress}>
       <Text style={styles.title}>
         { title }
       </Text>

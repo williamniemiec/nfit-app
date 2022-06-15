@@ -9,11 +9,13 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: colors.accent,
   },
   label: {
     paddingLeft: 10,
     paddingRight: 10,
+    color: colors.textPrimary,
+    display: 'none'
   },
   home: {
     width: 90,
@@ -22,7 +24,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 45,
     marginTop: -45,
-    backgroundColor: colors.accent,
+    backgroundColor: colors.dark,
     borderWidth: 5,
     borderColor:'white'
   },

@@ -72,3 +72,17 @@ function buildHeaderTab(
     headerRightContainerStyle: styles.headerRight,
   };
 }
+
+export function buildHeaderTransparent(
+  headerLeftComponent,
+  headerRightComponent,
+  title = '',
+) {
+  return buildHeaderTab(
+    headerLeftComponent,
+    headerRightComponent,
+    title,
+    'transparent',
+    colors.dark,
+  );
+}

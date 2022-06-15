@@ -138,6 +138,7 @@ const TodayMessage = ({ display, goToWorkout }) => {
         { translate('remaining_time_message_pt2') }
       </Text>
       <ActionButton
+        style={styles.startWorkout}
         title={translate('start_workout').toUpperCase()}
         onPress={goToWorkout}
       />

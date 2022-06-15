@@ -23,7 +23,7 @@ const HomeNavigator = () => (
       options={{
         title: 'Home',
         type: 'regular',
-        icon: require('../../assets/images/home.png'),
+        icon: require('../../assets/images/home-white.png'),
       }}
     />
     <Tab.Screen
@@ -42,7 +42,7 @@ const HomeNavigator = () => (
       options={{
         title: 'My Training',
         type: 'regular',
-        icon: require('../../assets/images/myworkouts.png'),
+        icon: require('../../assets/images/myworkouts-white.png'),
       }}
     />
   </Tab.Navigator>

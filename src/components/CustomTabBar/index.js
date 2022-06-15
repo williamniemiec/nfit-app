@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TouchableHighlight } from 'react-native';
 import styles from './styles';
 
 
@@ -36,6 +36,7 @@ const TabBarButton = ({ options, index, navigation, route, isFocused }) => {
         key={index}
         onPress={() => handleRedirect(navigation, route)}
         style={styles.home}
+        activeOpacity={1}
       >
         <Image style={styles.icon} source={options.icon} />
       </TouchableOpacity>

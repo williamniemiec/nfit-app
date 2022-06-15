@@ -31,4 +31,7 @@ export default StyleSheet.create({
     marginBottom: 5,
     marginTop: 5,
   },
+  startWorkout: {
+    marginTop: 10,
+  }
 });

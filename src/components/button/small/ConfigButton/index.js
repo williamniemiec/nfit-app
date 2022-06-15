@@ -11,7 +11,7 @@ const ConfigButton = ({ onPress }) => {
     <TouchableOpacity style={styles.btn} onPress={onPress}>
       <Image
         style={styles.icon}
-        source={require('../../../../assets/images/config-white.png')}
+        source={require('../../../../assets/images/config.png')}
       />
     </TouchableOpacity>
   );
