@@ -67,7 +67,12 @@ function buildHeaderTab(
     headerTintColor: fgColor,
     headerRight: () => headerRightComponent,
     headerLeft: () => headerLeftComponent,
-    headerStyle: {backgroundColor: bgColor},
+    headerStyle: {
+      backgroundColor: bgColor,
+      elevation: 0,
+      shadowOpacity: 0,
+      borderBottomWidth: 0,
+    },
     headerLeftContainerStyle: styles.headerLeft,
     headerRightContainerStyle: styles.headerRight,
   };

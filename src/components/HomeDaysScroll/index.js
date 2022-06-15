@@ -1,15 +1,7 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
 import Day from './Day';
-
-
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const screenWidth = Math.round(Dimensions.get('window').width);
-const dayWidth = Math.round(screenWidth / 9);
-const offsetWidth = Math.round((screenWidth - dayWidth) / 2) - 10;
 
 
 //-----------------------------------------------------------------------------
@@ -25,9 +17,27 @@ const HomeDaysScroll = ({
 }) => {
   const dayRef = useRef();
   const [days, setDays] = useState([]);
+  const [landscape, setLandscape] = useState(isLandscape());
+  const [dayWidth, setDayWidth] = useState(0);
+  const [offsetWidth, setOffsetWidth] = useState(0);
 
   useLayoutEffect(() => {
-    let daysInMonth = getLastMonth(selectedMonth);
+    Dimensions.addEventListener('change', ({ window: {width, height} })=>{
+      setLandscape(width > height);
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    const screen = Math.round(Dimensions.get('window').width);
+    const day = Math.round(screen / 9);
+    const offset = Math.round((screen - day) / 2);
+
+    setDayWidth(day);
+    setOffsetWidth(landscape ? offset + 10 : offset - 10);
+  }, [landscape]);
+
+  useLayoutEffect(() => {
+    const daysInMonth = getLastMonth(selectedMonth);
 
     setDays(getDaysOfMonthInArray(daysInMonth));
     setTimeout(() => {
@@ -52,7 +62,7 @@ const HomeDaysScroll = ({
         paddingLeft: offsetWidth,
         paddingRight: offsetWidth,
       }}
-      onMomentumScrollEnd={(event) => handleScrollEnd(event, setSelectedDay)}
+      onMomentumScrollEnd={(event) => handleScrollEnd(event, setSelectedDay, dayWidth)}
       style={styles.area}>
       {days.map((day, _) => (
         <Day
@@ -61,7 +71,7 @@ const HomeDaysScroll = ({
           month={selectedMonth}
           dailyProgress={dailyProgress}
           workoutDays={workoutDays}
-          onPress={() => handleSelectDay(day, dayRef, setSelectedDay)}
+          onPress={() => handleSelectDay(day, dayRef, setSelectedDay, dayWidth)}
           colorMapping={colorMapping}
         />
       ))}
@@ -75,6 +85,12 @@ export default HomeDaysScroll;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function isLandscape() {
+  const dim = Dimensions.get('screen');
+  
+  return (dim.width >= dim.height);
+}
+
 function getLastMonth(selectedMonth) {
   return new Date(
     new Date().getFullYear(),
@@ -97,14 +113,14 @@ function getCurrentMonth() {
   return new Date().getMonth();
 }
 
-function handleScrollEnd(event, setSelectedDay) {
+function handleScrollEnd(event, setSelectedDay, dayWidth) {
   const horizontalPosition = event.nativeEvent.contentOffset.x;
   const selectedIndex = Math.round(horizontalPosition / dayWidth);
 
   setSelectedDay(selectedIndex + 1);
 }
 
-function scrollToDay(day, dayRef) {
+function scrollToDay(day, dayRef, dayWidth) {
   const horizontalPosition = (day - 1) * dayWidth;
 
   dayRef.current.scrollTo({
@@ -114,7 +130,7 @@ function scrollToDay(day, dayRef) {
   });
 }
 
-function handleSelectDay(day, dayRef, setSelectedDay) {
-  scrollToDay(day, dayRef);
+function handleSelectDay(day, dayRef, setSelectedDay, dayWidth) {
+  scrollToDay(day, dayRef, dayWidth);
   setSelectedDay(day);
 }

@@ -4,7 +4,6 @@ import colors from '../../assets/colors';
 
 export default StyleSheet.create({
   area: {
-    width: 300,
     flexDirection: 'row',
     alignItems: 'center',
     color: 'white',

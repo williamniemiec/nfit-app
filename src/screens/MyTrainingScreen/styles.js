@@ -7,7 +7,6 @@ export default StyleSheet.create({
     margin: 15,
   },
   area: {
-    width: 300,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

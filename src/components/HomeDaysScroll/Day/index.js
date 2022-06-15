@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Dimensions,
   View,
@@ -6,13 +6,6 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import styles from './styles';
-
-
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const screenWidth = Math.round(Dimensions.get('window').width);
-const dayWidth = Math.round(screenWidth / 9);
 
 
 //-----------------------------------------------------------------------------
@@ -34,6 +27,9 @@ const Day = ({
   onPress,
   colorMapping,
 }) => {
+  const [landscape, setLandscape] = useState(isLandscape());
+  const [dayWidth, setDayWidth] = useState(0);
+
   if (colorMapping === undefined) {
     colorMapping = {
       today: 'red',
@@ -44,6 +40,18 @@ const Day = ({
       text: 'white',
     };
   }
+
+  useLayoutEffect(() => {
+    Dimensions.addEventListener('change', ({ window: {width, height} })=>{
+      setLandscape(width > height);
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    const screen = Math.round(Dimensions.get('window').width);
+
+    setDayWidth(Math.round(screen / 9));
+  }, [landscape]);
 
   return (
     <TouchableHighlight
@@ -68,6 +76,12 @@ export default Day;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function isLandscape() {
+  const dim = Dimensions.get('screen');
+  
+  return (dim.width >= dim.height);
+}
+
 function buildColorStyle(colorMapping, month, day, workoutDays, dailyProgress) {
   const today = getBeginTimeOfToday();
   const thisDate = getBeginTimeOf(today.getFullYear(), month, day);

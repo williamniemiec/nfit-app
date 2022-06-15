@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -26,8 +26,6 @@ const months = [
   translate('november'),
   translate('december'),
 ];
-const screenWidth = Math.round(Dimensions.get('window').width);
-const thirdWidth = screenWidth / 3;
 
 
 //-----------------------------------------------------------------------------
@@ -41,9 +39,24 @@ const HomeMonthScroll = ({
   bgColorInactive,
 }) => {
   const monthRef = useRef();
+  const [landscape, setLandscape] = useState(isLandscape());
+  const [thirdWidth, setThirdWidth] = useState(0);
 
   useLayoutEffect(() => {
-    setTimeout(() => scrollToMonth(selectedMonth, monthRef), 100);
+    Dimensions.addEventListener('change', ({ window: {width, height} })=>{
+      setLandscape(width > height);
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    const screen = Math.round(Dimensions.get('window').width);
+
+    setThirdWidth(Math.round(screen / 3));
+    setTimeout(() => scrollToMonth(selectedMonth, monthRef, Math.round(screen / 3)), 200);
+  }, [landscape]);
+
+  useLayoutEffect(() => {
+    setTimeout(() => scrollToMonth(selectedMonth, monthRef, thirdWidth), 200);
   }, [selectedMonth]);
 
   return (
@@ -57,7 +70,7 @@ const HomeMonthScroll = ({
         paddingLeft: thirdWidth,
         paddingRight: thirdWidth,
       }}
-      onMomentumScrollEnd={(event) => handleScrollEnd(event, setSelectedMonth)}
+      onMomentumScrollEnd={(event) => handleScrollEnd(event, setSelectedMonth, thirdWidth)}
       style={styles.area}>
       {months.map((month, index) => (
         <Month
@@ -67,6 +80,7 @@ const HomeMonthScroll = ({
           fgColor={fgColor}
           bgColor={(selectedMonth == index) ? bgColorActive : bgColorInactive}
           onPress={() => handleSelectMonth(index, setSelectedMonth)}
+          thirdWidth={thirdWidth}
         />
       ))}
     </ScrollView>
@@ -80,7 +94,8 @@ const Month = ({
   month,
   fgColor,
   onPress,
-  bgColor
+  bgColor,
+  thirdWidth
 }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -103,14 +118,20 @@ const Month = ({
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function handleScrollEnd(event, setSelectedMonth) {
+function isLandscape() {
+  const dim = Dimensions.get('screen');
+  
+  return (dim.width >= dim.height);
+}
+
+function handleScrollEnd(event, setSelectedMonth, thirdWidth) {
   const horizontalPosition = event.nativeEvent.contentOffset.x;
   const selectedIndex = Math.round(horizontalPosition / thirdWidth);
 
   setSelectedMonth(selectedIndex);
 }
 
-function scrollToMonth(month, monthRef) {
+function scrollToMonth(month, monthRef, thirdWidth) {
   const horizontalPosition = month * thirdWidth;
 
   monthRef.current.scrollTo({

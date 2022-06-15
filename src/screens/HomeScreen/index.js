@@ -13,6 +13,7 @@ import HomeDayStatus from '../../components/HomeDayStatus';
 import { buildHeaderTransparent } from '../../components/HeaderTab';
 import LightBackground from '../../components/background/LightBackground';
 import LocalStorageService from '../../services/LocalStorageService';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 //-----------------------------------------------------------------------------
@@ -40,18 +41,20 @@ const HomeScreen = () => {
   return (
     <LightBackground>
       <SafeAreaView style={globalStyles.container}>
-        <MonthSelector
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-        />
-        <DaySelector
-          selectedMonth={selectedMonth}
-          selectedDay={selectedDay}
-          setSelectedDay={setSelectedDay}
-          user={user}
-          navigation={navigation}
-          localStorageService={localStorageService}
-        />
+        <ScrollView>
+          <MonthSelector
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+          />
+          <DaySelector
+            selectedMonth={selectedMonth}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            user={user}
+            navigation={navigation}
+            localStorageService={localStorageService}
+          />
+        </ScrollView>
       </SafeAreaView>
     </LightBackground>
   );

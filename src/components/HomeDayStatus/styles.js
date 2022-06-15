@@ -6,6 +6,7 @@ export default StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10
   },
   ballonTriangle: {
     width: 0,
