@@ -3,6 +3,7 @@ import { TouchableHighlight, View, Text, Image } from 'react-native';
 import styles from './styles';
 import Muscles from '../muscles';
 import { SwipeRow } from 'react-native-swipe-list-view';
+import { translate } from '../../locales';
 
 
 //-----------------------------------------------------------------------------
@@ -37,9 +38,11 @@ const UpperArea = ({ editExercise, data }) => (
     onPress={editExercise}
     underlayColor="white">
     <>
-      {Muscles[data.muscle]}
+      { Muscles[data.muscle] }
       <View style={styles.exerciseInfo}>
-        <Text style={styles.exerciseName}>{data.name}</Text>
+        <Text style={styles.exerciseName}>
+          { translate(data.name) }
+        </Text>
         <Text style={styles.exerciseDetails}>
           {`${data.sets} sets - ${data.reps} rep ${
             data.load ? `- ${data.load} kg` : ``

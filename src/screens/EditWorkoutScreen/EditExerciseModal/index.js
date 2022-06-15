@@ -36,7 +36,7 @@ const EditExerciseModal = ({
       <MuscleSelector onSelect={setMuscle} />
       <NameSelector name={name} setName={setName} />
       <View style={styles.modalNumericInputs}>
-        <SetsSelector sets={sets} setRepetitions={setSets} />
+        <SetsSelector sets={sets} setSets={setSets} />
         <RepetitionsSelector repetitions={reps} setRepetitions={setReps} />
         <WeightSelector load={load} setLoad={setLoad} />
       </View>
@@ -52,7 +52,8 @@ const EditExerciseModal = ({
           setReps, 
           load, 
           setLoad, 
-          sets, 
+          sets,
+          setSets,
           onSave, 
           setModalVisible
         )}
@@ -135,7 +136,8 @@ function handleModalSave(
   setReps, 
   load, 
   setLoad, 
-  sets, 
+  sets,
+  setSets,
   onSave, 
   setModalVisible
 ) {
@@ -144,20 +146,25 @@ function handleModalSave(
     return;
   }
   
-  onSave();
+  onSave(name, muscle, sets, reps, load);
   setModalVisible(false);
-  resetModal(setName, setMuscle, setReps, setLoad);
+  resetModal(setName, setMuscle, setSets, setReps, setLoad);
 }
 
 function isAllRequiredFieldsFilled(name, muscle, sets, reps, load) {
   return  name != '' 
+          && name != undefined
           && muscle != ''
+          && muscle != undefined
           && sets != ''
+          && sets != undefined
           && reps != ''
-          && load != '';
+          && reps != undefined
+          && load != ''
+          && load != undefined;
 }
 
-function resetModal(setName, setMuscle, setReps, setLoad) {
+function resetModal(setName, setMuscle, setSets, setReps, setLoad) {
   setName('');
   setMuscle('');
   setSets('');

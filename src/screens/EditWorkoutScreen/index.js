@@ -29,6 +29,7 @@ const EditWorkoutScreen = (props) => {
   const [exercises, setExercises] = useState(getWorkoutExercises(isNew, workout));
   const [editExercise, setEditExercise] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  
 
   useLayoutEffect(() => {
     navigation.setOptions(
@@ -49,7 +50,7 @@ const EditWorkoutScreen = (props) => {
         isNew ? translate('add_workout') : translate('edit_workout'),
       ),
     );
-  }, [name]);
+  }, [name, exercises]);
 
   return (
     <SafeAreaView style={[globalStyles.container, styles.body]}>
@@ -57,14 +58,13 @@ const EditWorkoutScreen = (props) => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         onSave={(
-          modalId, 
           modalName, 
           modalMuscle, 
           modalSets, 
           modalReps, 
           modalLoad
         ) => handleModalSave(
-          modalId, 
+          id, 
           modalName,
           modalMuscle, 
           modalSets, 
@@ -148,7 +148,7 @@ function handleSave(navigation, dispatch, isNew, id, name, exercises) {
     alert(translate('workout_name_required'));
     return;
   }
-
+  console.log(exercises)
   if (isNew) {
     dispatch({
       type: 'ADD_MY_WORKOUTS',
@@ -158,7 +158,8 @@ function handleSave(navigation, dispatch, isNew, id, name, exercises) {
         exercises: exercises,
       },
     });
-  } else {
+  } 
+  else {
     dispatch({
       type: 'UPDATE_MY_WORKOUTS',
       payload: {
@@ -169,10 +170,10 @@ function handleSave(navigation, dispatch, isNew, id, name, exercises) {
     });
   }
   navigation.goBack();
-};
+}
 
 function handleModalSave(
-  modalId,
+  id,
   modalName,
   modalMuscle,
   modalSets,
@@ -193,7 +194,7 @@ function handleModalSave(
     });
   } 
   else {
-    const index = exercises.findIndex((e) => e.id == modalId);
+    const index = exercises.findIndex((e) => e.id == id);
 
     if (index > -1) {
       exercises[index].name = modalName;
@@ -226,6 +227,7 @@ function removeExercise(exercise, exercises, setExercises) {
   const newExercises = exercises.filter((ex) => ex.id != exercise.id);
 
   setExercises(newExercises);
+  
 }
 
 function handleEditExercise(exercise, setEditExercise, setModalVisible) {
