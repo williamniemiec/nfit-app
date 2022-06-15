@@ -34,6 +34,15 @@ const HomeDaysScroll = ({
 
     setDayWidth(day);
     setOffsetWidth(landscape ? offset + 10 : offset - 10);
+    setTimeout(() => {
+      // It is necessary because of ScrollView render time
+      if (selectedMonth == getCurrentMonth()) {
+        scrollToDay(selectedDay, dayRef, day);
+      }
+      else {
+        scrollToDay(1, dayRef, day);
+      }
+    }, 100);
   }, [landscape]);
 
   useLayoutEffect(() => {
@@ -43,10 +52,10 @@ const HomeDaysScroll = ({
     setTimeout(() => {
       // It is necessary because of ScrollView render time
       if (selectedMonth == getCurrentMonth()) {
-        scrollToDay(selectedDay, dayRef);
+        scrollToDay(selectedDay, dayRef, dayWidth);
       }
       else {
-        scrollToDay(1, dayRef);
+        scrollToDay(1, dayRef, dayWidth);
       }
     }, 100);
   }, [selectedMonth]);
