@@ -14,6 +14,7 @@ import ActionButton from '../../components/button/ActionButton';
 import TransparentButton from '../../components/button/TransparentButton';
 import ExercisesItemEdit from '../../components/ExercisesItemEdit';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
+import LocalStorageService from '../../services/LocalStorageService';
 
 
 //-----------------------------------------------------------------------------
@@ -24,7 +25,7 @@ const EditWorkoutScreen = (props) => {
   const workout = isNew ? [] : props.route.params.workout;
   const id = isNew ? uuid() : workout.id;
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const localStorageService = new LocalStorageService(useDispatch());
   const [name, setName] = useState(isNew ? '' : workout.name);
   const [exercises, setExercises] = useState(getWorkoutExercises(isNew, workout));
   const [editExercise, setEditExercise] = useState(null);
@@ -41,7 +42,7 @@ const EditWorkoutScreen = (props) => {
         />,
         <SaveButton onPress={() => handleSave(
           navigation, 
-          dispatch, 
+          localStorageService, 
           isNew, 
           id, 
           name, 
@@ -143,31 +144,17 @@ function handleGoBack(navigation) {
   navigation.goBack();
 }
 
-function handleSave(navigation, dispatch, isNew, id, name, exercises) {
+function handleSave(navigation, localStorageService, isNew, id, name, exercises) {
   if (name == '') {
     alert(translate('workout_name_required'));
     return;
   }
   
   if (isNew) {
-    dispatch({
-      type: 'ADD_MY_WORKOUTS',
-      payload: {
-        id: id,
-        name: name,
-        exercises: exercises,
-      },
-    });
+    localStorageService.addWorkout(id, name, exercises);
   } 
   else {
-    dispatch({
-      type: 'UPDATE_MY_WORKOUTS',
-      payload: {
-        id: id,
-        name: name,
-        exercises: exercises,
-      },
-    });
+    localStorageService.updateWorkout(id, name, exercises);
   }
   navigation.goBack();
 }

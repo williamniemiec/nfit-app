@@ -12,6 +12,7 @@ import HomeDaysScroll from '../../components/HomeDaysScroll';
 import HomeDayStatus from '../../components/HomeDayStatus';
 import { buildHeaderTransparent } from '../../components/HeaderTab';
 import LightBackground from '../../components/background/LightBackground';
+import LocalStorageService from '../../services/LocalStorageService';
 
 
 //-----------------------------------------------------------------------------
@@ -23,6 +24,7 @@ const HomeScreen = () => {
   const [selectedDay, setSelectedDay] = useState(today.getDate());
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const localStorageService = new LocalStorageService(dispatch);
   const user = useSelector((state) => state.user);
 
   useLayoutEffect(() => {
@@ -48,7 +50,7 @@ const HomeScreen = () => {
           setSelectedDay={setSelectedDay}
           user={user}
           navigation={navigation}
-          dispatch={dispatch}
+          localStorageService={localStorageService}
         />
       </SafeAreaView>
     </LightBackground>
@@ -73,7 +75,7 @@ const DaySelector = ({
   setSelectedDay,
   user,
   navigation,
-  dispatch
+  localStorageService
 }) => {
   const colorMapping = {
     today: colors.dailyProgressToday,
@@ -100,12 +102,8 @@ const DaySelector = ({
         setSelectedDay={setSelectedDay}
         dailyProgress={user.dailyProgress}
         workoutDays={user.workoutDays}
-        addProgress={(date) => 
-          dispatch({type: 'ADD_DAILY_PROGRESS', payload: { date }})
-        }
-        deleteProgress={(date) =>
-          dispatch({type: 'DELETE_DAILY_PROGRESS', payload: { date }})
-        }
+        addProgress={(date) => localStorageService.addDailyProgress(date)}
+        deleteProgress={(date) =>localStorageService.removeDailyProgress(date)}
         goToWorkout={() => navigation.navigate('DoTrainingNavigator')}
       />
       <Legend colorMapping={colorMapping} />

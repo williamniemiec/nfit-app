@@ -13,6 +13,7 @@ import { translate } from '../../locales';
 import CloseButton from '../../components/button/small/CloseButton';
 import ExerciseItem from '../../components/ExerciseItem';
 import FitnessBackground from '../../components/background/FitnessBackground';
+import LocalStorageService from '../../services/LocalStorageService';
 
 
 //-----------------------------------------------------------------------------
@@ -22,7 +23,7 @@ const PlayTrainingScreen = (props) => {
   const exercisesDone = new Set();
   const workout = props.route.params.workout;
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const localStorageService = new LocalStorageService(useDispatch());
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,7 +40,7 @@ const PlayTrainingScreen = (props) => {
             exercises={workout.exercises} 
             exercisesDone={exercisesDone} 
             workout={workout}
-            dispatch={dispatch} 
+            localStorageService={localStorageService} 
             navigation={navigation}
           />
         </View>
@@ -61,7 +62,7 @@ const WorkoutList = ({
   exercises, 
   exercisesDone, 
   workout, 
-  dispatch, 
+  localStorageService, 
   navigation 
 }) => (
   <FlatList
@@ -76,7 +77,7 @@ const WorkoutList = ({
           exercisesDone, 
           exercises, 
           workout,
-          dispatch, 
+          localStorageService, 
           navigation
         )}
       />
@@ -94,7 +95,7 @@ function handleOnCheck(
   exercisesDone, 
   exercises, 
   workout, 
-  dispatch, 
+  localStorageService, 
   navigation
 ) {
   if (exercisesDone.has(exercise.id)) {
@@ -106,16 +107,7 @@ function handleOnCheck(
 
   if (isAllExercisesDone(exercisesDone, exercises)) {
     alert(translate('all_workouts_done'));
-
-    dispatch({
-      type: 'ADD_DAILY_PROGRESS',
-      payload: { date: getCurrentDate() },
-    });
-    dispatch({
-      type: 'SET_LAST_WORKOUT',
-      payload: { workout: workout.id },
-    });
-
+    localStorageService.markWorkoutAsDone(workout.id);
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
@@ -127,23 +119,6 @@ function handleOnCheck(
       }),
     );
   }
-}
-
-function getCurrentDate() {
-  const today = new Date();
-  let thisYear = today.getFullYear();
-  let thisMonth = today.getMonth() + 1;
-  let thisDay = today.getDate();
-
-  if (thisMonth < 10) {
-    thisMonth = '0' + thisMonth;
-  }
-
-  if (thisDay < 10) {
-    thisDay = '0' + thisDay;
-  }
-
-  return `${thisYear}-${thisMonth}-${thisDay}`;
 }
 
 function isAllExercisesDone(exercisesDone, exercises) {

@@ -11,13 +11,14 @@ import TrashButton from '../../components/button/small/TrashButton';
 import Workout from '../../components/Workout';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 import LightBackground from '../../components/background/LightBackground';
+import LocalStorageService from '../../services/LocalStorageService';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
 const MyTrainingScreen = () => {
-  const dispatch = useDispatch();
+  const localStorageService = new LocalStorageService(useDispatch());
   const navigation = useNavigation();
   const user = useSelector((state) => state.user);
 
@@ -40,7 +41,7 @@ const MyTrainingScreen = () => {
             index={index}
             workout={workout} 
             navigation={navigation} 
-            dispatch={dispatch} 
+            localStorageService={localStorageService} 
           />
         ))}
       </ScrollView>
@@ -50,7 +51,7 @@ const MyTrainingScreen = () => {
 
 export default MyTrainingScreen;
 
-const Training = ({ index, workout, navigation, dispatch }) => (
+const Training = ({ index, workout, navigation, localStorageService }) => (
   <View style={styles.area} key={index}>
     <Workout
       id={workout.id}
@@ -59,7 +60,7 @@ const Training = ({ index, workout, navigation, dispatch }) => (
     />
     <View style={styles.actions}>
       <EditButton onPress={() => handleEditWorkout(workout, navigation)} />
-      <TrashButton onPress={() => handleDeleteWorkout(workout, dispatch)} />
+      <TrashButton onPress={() => handleDeleteWorkout(workout, localStorageService)} />
     </View>
   </View>
 );
@@ -72,7 +73,7 @@ function handleEditWorkout(workout, navigation) {
   navigation.navigate('EditWorkoutScreen', { workout });
 }
 
-function handleDeleteWorkout(workoutId, dispatch) {
+function handleDeleteWorkout(workoutId, localStorageService) {
   Alert.alert(
     translate('remove_workout'),
     translate('remove_workout_confirmation'),
@@ -83,11 +84,7 @@ function handleDeleteWorkout(workoutId, dispatch) {
       },
       {
         text: translate('yes'),
-        onPress: () =>
-          dispatch({
-            type: 'DEL_MY_WORKOUTS',
-            payload: { workoutId: workoutId },
-          }),
+        onPress: () => localStorageService.removeWorkout(workoutId)
       },
     ],
     { cancelable: false },

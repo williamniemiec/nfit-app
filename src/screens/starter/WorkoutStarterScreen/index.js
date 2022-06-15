@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import RNRestart from 'react-native-restart';
 import { useDispatch } from 'react-redux';
 import styles from './styles';
 import globalStyles from '../../../assets/styles/global';
@@ -11,6 +10,7 @@ import Trainings from '../../../components/Trainings';
 import TheManBackground from '../../../components/background/TheManBackground';
 import { buildHeaderTabDark } from '../../../components/HeaderTab';
 import WorkoutService from '../../../services/WorkoutService';
+import LocalStorageService from '../../../services/LocalStorageService';
 
 
 //-----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ const WorkoutStarterScreen = (props) => {
   const [nextBtnLabel, setNextBtnLabel] = useState('');
   const [totalWorkouts, setTotWorkout] = useState(0);
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const localStorageService = new LocalStorageService(useDispatch());
 
   useEffect(() => {
     setNextBtnLabel((workouts.size == 0) ? translate('ignore') : translate('finish'))
@@ -40,7 +40,7 @@ const WorkoutStarterScreen = (props) => {
     navigation.setOptions(
       buildHeaderTabDark(
         () => handleGoBack(props), 
-        () => handleGoNext(props, workouts, dispatch)
+        () => handleGoNext(props, workouts, localStorageService)
       )
     );
   }, [nextBtnLabel]);
@@ -106,33 +106,17 @@ const WorkoutList = ({ prebuiltWorkouts, onSelect, loading }) => {
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function handleGoNext(props, workouts, dispatch) {
+function handleGoNext(props, workouts, localStorageService) {
   if (!isNameSet(props)) {
     return;
   }
 
-  dispatch({
-    type: 'SET_NAME',
-    payload: {
-      name: props.route.params.name,
-    },
-  });
-  dispatch({
-    type: 'SET_LEVEL',
-    payload: {
-      level: props.route.params.level,
-    },
-  });
-  dispatch({
-    type: 'SET_WORKOUT_DAYS',
-    payload: {
-      workoutDays: props.route.params.workoutDays,
-    },
-  });
-  dispatch({
-    type: 'SET_MY_WORKOUTS',
-    payload: { workouts },
-  });
+  localStorageService.newUser(
+    props.route.params.name,
+    props.route.params.level,
+    props.route.params.workoutDays,
+    workouts
+  );
 }
 
 function isNameSet(props) {
