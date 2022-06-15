@@ -71,7 +71,7 @@ export default (state = initialState, action) => {
       break;
     case 'DELETE_DAILY_PROGRESS':
       dailyProgress = state.dailyProgress.filter(
-        (date, index) => date != action.payload.date,
+        (date, _) => date != action.payload.date,
       );
 
       return {...state, dailyProgress: dailyProgress};

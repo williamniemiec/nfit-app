@@ -6,7 +6,7 @@ import styles from './styles';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const AddButton = ({ onPress }) => (
+const PlayButton = ({ onPress }) => (
   <TouchableOpacity style={styles.btn} onPress={onPress}>
     <Image 
       style={styles.icon} 
@@ -15,4 +15,4 @@ const AddButton = ({ onPress }) => (
   </TouchableOpacity>
 );
 
-  export default AddButton;
+  export default PlayButton;

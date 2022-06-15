@@ -80,6 +80,10 @@ class LocalStorageService {
       type: 'DELETE_DAILY_PROGRESS', 
       payload: { date }
     });
+    this.dispatch({
+      type: 'SET_LAST_WORKOUT',
+      payload: { workout: '' },
+    });
   }
 
   addWorkout(id, name, exercises) {

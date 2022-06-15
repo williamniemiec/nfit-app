@@ -72,7 +72,7 @@ const LastWorkout = ({ user }) => {
 const RemainingWorkouts = ({ user, navigation }) => (
   <ScrollView style={[globalStyles.container, styles.body]}>
     {user.myWorkouts.map((workout, index) =>
-        workout.id != user.lastWorkout && (
+        workout && workout.id != user.lastWorkout && (
           <View style={styles.area} key={index}>
             <Workout
               id={workout.id}
