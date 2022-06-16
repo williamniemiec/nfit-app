@@ -15,6 +15,7 @@ import TransparentButton from '../../components/button/TransparentButton';
 import ExercisesItemEdit from '../../components/ExercisesItemEdit';
 import { buildHeaderTabAccent } from '../../components/HeaderTab';
 import LocalStorageService from '../../services/LocalStorageService';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 //-----------------------------------------------------------------------------
@@ -55,41 +56,43 @@ const EditWorkoutScreen = (props) => {
 
   return (
     <SafeAreaView style={[globalStyles.container, styles.body]}>
-      <EditExerciseModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        onSave={(
-          modalName, 
-          modalMuscle, 
-          modalSets, 
-          modalReps, 
-          modalLoad
-        ) => handleModalSave(
-          id, 
-          modalName,
-          modalMuscle, 
-          modalSets, 
-          modalReps, 
-          modalLoad, 
-          isNew,
-          exercises, 
-          setExercises
-        )}
-        exercise={editExercise}
-      />
-      <ExerciseName name={name} setName={setName} />
-      <View style={styles.exercisesArea}>
-        <NewExerciseButton onPress={() => handleAddExercise(
-          setEditExercise, 
-          setModalVisible
-        )} />
-        <Exercises 
-          exercises={exercises} 
-          setExercises={setExercises}
-          setEditExercise={setEditExercise} 
-          setModalVisible={setModalVisible} 
+      <ScrollView>
+        <EditExerciseModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          onSave={(
+            modalName, 
+            modalMuscle, 
+            modalSets, 
+            modalReps, 
+            modalLoad
+          ) => handleModalSave(
+            id, 
+            modalName,
+            modalMuscle, 
+            modalSets, 
+            modalReps, 
+            modalLoad, 
+            isNew,
+            exercises, 
+            setExercises
+          )}
+          exercise={editExercise}
         />
-      </View>
+        <ExerciseName name={name} setName={setName} />
+        <View style={styles.exercisesArea}>
+          <NewExerciseButton onPress={() => handleAddExercise(
+            setEditExercise, 
+            setModalVisible
+          )} />
+          <Exercises 
+            exercises={exercises} 
+            setExercises={setExercises}
+            setEditExercise={setEditExercise} 
+            setModalVisible={setModalVisible} 
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

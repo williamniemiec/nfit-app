@@ -20,7 +20,7 @@
 <hr />
 
 ## ❇ Introduction
-nFit is a simple work out app made using [React Native](https://reactnative.dev/). The main objective was to develop a mobile application for learning purposes. You can interact with the project downloading the app on your smartphone through PlayStore ([click here to access](https://play.google.com/store/apps/details?id=wniemiec.app.nfit)).
+nFit is a simple work out app made using [React Native](https://reactnative.dev/). The main objective was to develop a mobile application for learning purposes only, not for profit. You can interact with the project downloading the app on your smartphone through PlayStore ([click here to access](https://play.google.com/store/apps/details?id=wniemiec.app.nfit)).
 
 ## ✔ Requirements
 - [JDK 8+](https://www.oracle.com/java/technologies/downloads/);
@@ -65,17 +65,29 @@ ReferenceError: SHA-1 for file /usr/local/lib/node_modules/react-native/node_mod
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap">
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/screens/img1.png" alt="image 1" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen1.png" alt="image 1" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/screens/img5.png" alt="image 5" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen2.png" alt="image 2" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/screens/img6.png" alt="image 6" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen3.png" alt="image 3" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/screens/img7.png" alt="image 7" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen4.png" alt="image 4" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/screens/img8.png" alt="image 8" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen5.png" alt="image 5" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/screens/img9.png" alt="image 9" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen6.png" alt="image 6" />
+
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen7.png" alt="image 7" />
+
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen8.png" alt="image 8" />
+
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen9.png" alt="image 9" />
+
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen10.png" alt="image 10" />
+
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen11.png" alt="image 11" />
+
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/screens/screen12.png" alt="image 12" />
 </div>
 
 

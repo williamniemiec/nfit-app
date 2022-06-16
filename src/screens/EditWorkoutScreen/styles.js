@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   body: {
-    alignItems: 'center',
     margin: 20,
   },
   input: {
