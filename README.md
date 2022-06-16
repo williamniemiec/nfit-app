@@ -1,5 +1,5 @@
 <p align='center'>
-<img src='https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/img/logo/logo.jpg' />
+<img src='https://raw.githubusercontent.com/williamniemiec/nfit-app/master/docs/images/logo/logo.jpg' />
 </p>
 
 <h1 align='center'>nFit - APP</h1>
@@ -102,8 +102,22 @@ Details about each version are documented in the [releases section](https://gith
 ### /
 |        Name        |Type|Description|
 |----------------|-------------------------------|-----------------------------|
-|__tests__|`Directory`|Test files|
+|\_\_tests\_\_|`Directory`|Test files|
 |android|`Directory`|Android source files|
-|ios|`Directory`|iOS source files|
 |docs |`Directory`|Documentation files|
+|ios|`Directory`|iOS source files|
 |src     |`Directory`| Source files|
+
+### /src
+|        Name        |Type|Description|
+|----------------|-------------------------------|-----------------------------|
+|assets|`Directory`|Application static files|
+|components|`Directory`|Reusable objects|
+|config|`Directory`|Configuration files|
+|locales|`Directory`|Translation files|
+|navigators|`Directory`|React Navigation files|
+|reducers|`Directory`|React Redux files|
+|screens|`Directory`|Application screens|
+|services|`Directory`|Classes responsible for providing data from APIs and utility services|
+|App.js|`File`|Application point entry|
+|Store.js|`File`|React Redux configuration file|
