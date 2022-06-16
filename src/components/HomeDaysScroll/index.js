@@ -1,4 +1,11 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
 import Day from './Day';
